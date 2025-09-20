@@ -65,11 +65,33 @@ const JalSathiChat = () => {
   };
 
   return (
-    <div className="jal-sathi-container">
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      background: 'linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 50%, #e0f7fa 100%)',
+      fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif"
+    }}>
       <ChatHeader />
       
-      <div className="chat-main">
-        <div className="messages-container">
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        width: '100%',
+        minHeight: 0
+      }}>
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          minHeight: 0
+        }}>
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
