@@ -16,4 +16,53 @@ Queryframer.main(query)
   });
 });
 
+
+router.post("/api/chat", async(req, res) => {
+  try {
+    const { message, timestamp } = req.body;
+    
+    // Validate the request
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ 
+        error: "Message is required and must be a string" 
+      });
+    }
+
+    // Log the received message
+    console.log(`Received chat message: ${message}`);
+    console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
+    // the actaul work is done here🤖🤖🤖'
+    await Queryframer.main(message)
+  .then(() => {
+    res.status(200).send("Query processed");
+  })
+  .catch((error) => {
+    console.error("Error processing query:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  });
+
+    // Here you can add your AI/ML processing logic
+    // For now, we'll return a simple acknowledgment
+
+// for now we will have to comment this part
+
+    // const response = {
+    //   success: true,
+    //   message: "Message received successfully",
+    //   receivedMessage: message,
+    //   timestamp: new Date().toISOString(),
+    //   // You can add AI response here later
+    //   aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
+    // };
+
+    // res.json(response);
+  } catch (error) {
+    console.error("Error processing chat message:", error);
+    res.status(500).json({ 
+      error: "Internal server error while processing chat message" 
+    });
+  }
+});
+
+
 module.exports = router;
