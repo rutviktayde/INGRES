@@ -2,8 +2,8 @@
 const express = require("express");
 const path = require("path");
 require("dotenv").config();
-
 const app = express();
+const routes = require("./Routes/routes");
 app.use(express.json());
 
 // Allow CORS during development only (adjust origin in production)
@@ -43,7 +43,10 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.post("user/api/req", (re) => {});
+// using routes for handling requests
+app.use("/", routes);
+
+/* ---------- Start server ---------- */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
