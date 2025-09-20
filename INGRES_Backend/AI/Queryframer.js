@@ -1,7 +1,7 @@
 // To run this code you need to install the following dependencies:
 // npm install @google/genai mime
 // npm install -D @types/node
-
+const data_retrive = require('../Routes/data_retrive');
 const { GoogleGenAI } = require('@google/genai');
 
 async function main(query) {
@@ -59,6 +59,8 @@ try {
 }
 const sql = parsed ? parsed.sql : null;
 console.log("SQL Query: ", sql);
+const chart = parsed ? parsed.chart : null;
+console.log("SQL Query: ", chart);
 //extracting sql query from the response
 // const converting = JSON.parse(fullText);
 // const sql = converting.sql;

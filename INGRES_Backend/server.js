@@ -1,10 +1,25 @@
 // server.js
 const express = require("express");
 const path = require("path");
+const mysql = require('mysql2'); 
 require("dotenv").config();
 const app = express();
 const routes = require("./Routes/routes");
 app.use(express.json());
+
+// connecting Mysql database
+const con = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 
 // Allow CORS during development only (adjust origin in production)
 if (process.env.NODE_ENV !== "production") {
