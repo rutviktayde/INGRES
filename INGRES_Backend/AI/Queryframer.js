@@ -3,10 +3,11 @@
 // npm install -D @types/node
 const data_retrive = require('../Routes/data_retrive');
 const { GoogleGenAI } = require('@google/genai');
-
+//to resolve error
+let fullText = '';
 async function main(query) {
     user_query = query;
-    prompt =`Generate a SQL query or response for the user query: '${user_query}'. The table is 'groundwater' in the 'ingres_db' database with the following schema:    DISTRICT VARCHAR(255),
+    prompt =`Generate a SQL query or response for the user query: '${user_query}'. The table is 'ingres' in the 'ingres_db' database with the following schema:    DISTRICT VARCHAR(255),
     ASSESSMENT_UNIT VARCHAR(255),
     Rainfall_mm FLOAT,
     Total_Geographical_Area_ha FLOAT,
@@ -54,17 +55,20 @@ async function main(query) {
     },
   ];
 
-  const response = await ai.models.generateContentStream({
-    model,
-    config,
-    contents,
-  });
-  let fileIndex = 0;
-let fullText = '';
-for await (const chunk of response) {
-    if (chunk.text) {
-        fullText += chunk.text;
+try {
+      const response = await ai.models.generateContentStream({
+        model,
+        config,
+        contents,
+      });
+      let fileIndex = 0;
+    for await (const chunk of response) {
+        if (chunk.text) {
+            fullText += chunk.text;
+        }
     }
+} catch (error) {
+    console.error('Error during content generation using api:', error);
 }
 
 
@@ -88,7 +92,10 @@ try {
 } catch (error) {
   console.error('Error parsing JSON:', error);
 }
-const sql = parsed ? parsed.sql : null;
+
+
+// 🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️this part is added to remove postgres specific ILIKE and DISTRICT to LOWER(DISTRICT) for case insensitive search
+const sql = parsed ? parsed.sql.replace(/ILIKE/gi, "LIKE").replace(/DISTRICT/g, "LOWER(DISTRICT)"): null;
 console.log("SQL Query: ", sql);
 const chart = parsed ? parsed.chart : null;
 console.log("chart type: ", chart);
@@ -96,8 +103,13 @@ console.log("chart type: ", chart);
 // const converting = JSON.parse(fullText);
 // const sql = converting.sql;
 // console.log("SQL Query: ", sql);
+
+try {
+   await data_retrive(sql);
+} catch (error) {
+    console.error("Error retrieving data :", error);
 }
 
-// data_retrive(sql);
+}
 
 module.exports = { main };

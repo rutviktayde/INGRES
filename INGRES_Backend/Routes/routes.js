@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Queryframer = require("../AI/Queryframer");
+let { data_retrive } = require("../Routes/data_retrive");
 // Define your routes here
 // Example route
 router.post("/example", (req, res) => {
