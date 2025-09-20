@@ -1,13 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './index.css'
-import Navigation from './components/Navigation'
-import Home from './pages/Home'
-import JalSathiChat from './pages/JalSathiChat'
-import About from './pages/About'
-import Login from './pages/Login'
-import Contact from './pages/Contact'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./index.css";
+import Navigation from "./components/Navigation";
+import Home from "./pages/Home";
+import JalSathiChat from "./pages/JalSathiChat";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -23,11 +23,12 @@ function App() {
         </Routes>
       </div>
     </Router>
-  )
+  );
 }
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);
+//just a comment
