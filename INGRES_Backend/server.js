@@ -2,8 +2,8 @@
 const express = require("express");
 const path = require("path");
 require("dotenv").config();
-
 const app = express();
+const routes = require("./Routes/routes");
 app.use(express.json());
 
 // Allow CORS during development only (adjust origin in production)
