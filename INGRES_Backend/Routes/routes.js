@@ -3,6 +3,7 @@ const Queryframer = require("../AI/Queryframer");
 // Define your routes here
 // Example route
 router.post("/example", (req, res) => {
+  console.log("This is /example controller 🫡🫡:")
   const query=req.body.query;
 Queryframer.main(query)
   .then(() => {

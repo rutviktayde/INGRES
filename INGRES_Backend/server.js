@@ -58,6 +58,10 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
+app.use("/", routes);
+
+
+//😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️ we have to move to routes.js
 // Chat API route for Jal Sathi
 app.post("/api/chat", (req, res) => {
   try {
