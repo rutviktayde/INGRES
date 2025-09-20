@@ -43,7 +43,41 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.post("user/api/req", (re) => {});
+// Chat API route for Jal Sathi
+app.post("/api/chat", (req, res) => {
+  try {
+    const { message, timestamp } = req.body;
+    
+    // Validate the request
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ 
+        error: "Message is required and must be a string" 
+      });
+    }
+
+    // Log the received message
+    console.log(`Received chat message: ${message}`);
+    console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
+
+    // Here you can add your AI/ML processing logic
+    // For now, we'll return a simple acknowledgment
+    const response = {
+      success: true,
+      message: "Message received successfully",
+      receivedMessage: message,
+      timestamp: new Date().toISOString(),
+      // You can add AI response here later
+      aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.error("Error processing chat message:", error);
+    res.status(500).json({ 
+      error: "Internal server error while processing chat message" 
+    });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>

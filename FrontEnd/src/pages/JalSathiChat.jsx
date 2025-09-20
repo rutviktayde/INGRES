@@ -33,30 +33,60 @@ const JalSathiChat = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim()) {
       const userMessage = { text: input, sender: 'user', timestamp: new Date() };
       setMessages(prev => [...prev, userMessage]);
+      const messageText = input;
       setInput('');
       setIsTyping(true);
       
-      // Simulate bot response
-      setTimeout(() => {
-        setIsTyping(false);
+      try {
+        // Send message to backend
+        const response = await fetch('http://localhost:5000/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: messageText,
+            timestamp: new Date().toISOString()
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Backend response:', data);
+        
+        // Add bot response from backend
+        setMessages(prev => [...prev, { 
+          text: data.aiResponse || 'I received your message but couldn\'t generate a response.', 
+          sender: 'bot', 
+          timestamp: new Date() 
+        }]);
+      } catch (error) {
+        console.error('Error sending message to backend:', error);
+        
+        // Fallback to simulated response if backend fails
         const responses = [
-          `Based on your query about "${input}", I can provide detailed information about groundwater management strategies, including monitoring techniques, sustainable irrigation practices, and water conservation methods.`,
-          `Regarding "${input}", let me share some insights from the Jal Shakti Abhiyan data. I can help you understand water table levels, seasonal variations, and recommended conservation practices for your area.`,
-          `Great question about "${input}"! As part of the Jal Shakti initiative, I can guide you through water budgeting, rainwater harvesting techniques, and efficient irrigation scheduling to optimize groundwater usage.`
+          `Based on your query about "${messageText}", I can provide detailed information about groundwater management strategies, including monitoring techniques, sustainable irrigation practices, and water conservation methods.`,
+          `Regarding "${messageText}", let me share some insights from the Jal Shakti Abhiyan data. I can help you understand water table levels, seasonal variations, and recommended conservation practices for your area.`,
+          `Great question about "${messageText}"! As part of the Jal Shakti initiative, I can guide you through water budgeting, rainwater harvesting techniques, and efficient irrigation scheduling to optimize groundwater usage.`
         ];
         
         const randomResponse = responses[Math.floor(Math.random() * responses.length)];
         
         setMessages(prev => [...prev, { 
-          text: randomResponse, 
+          text: `⚠️ Backend connection failed. ${randomResponse}`, 
           sender: 'bot', 
           timestamp: new Date() 
         }]);
-      }, 1500);
+      } finally {
+        setIsTyping(false);
+      }
     }
   };
 
