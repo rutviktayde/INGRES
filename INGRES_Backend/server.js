@@ -11,7 +11,6 @@ if (process.env.NODE_ENV !== "production") {
   const cors = require("cors");
   app.use(cors({ origin: "http://localhost:5173" })); // Vite default
 }
-
 /* ---------- API routes ---------- */
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from INGRES backend" });
@@ -40,5 +39,13 @@ if (staticFolder) {
   });
 }
 
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
+
+app.post("user/api/req", (re) => {});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on port http://localhost:${PORT}/`)
+);
