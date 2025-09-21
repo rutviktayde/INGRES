@@ -1,0 +1,73 @@
+look this is currently working fine.
+you just need to make an env file and add your gemini api key in it.
+GEMINI_API_KEY==yours
+    DB_HOST=localhost
+    DB_USER==yours
+    DB_PASSWORD==yours
+    DB_NAME==yours
+
+
+
+below is the sql commmand that you need to run in your mysql to create the table and add some data in it.
+
+
+
+CREATE TABLE groundwater_simplified (
+    DISTRICT VARCHAR(255),
+    ASSESSMENT_UNIT VARCHAR(255),
+    Rainfall_mm FLOAT,
+    Total_Geographical_Area_ha FLOAT,
+    Recharge_Worthy_Area_ha FLOAT,
+    Hilly_Area_ha FLOAT,
+    Rainfall_Recharge_Total FLOAT,
+    Canals_Total FLOAT,
+    Tanks_and_Ponds_Total FLOAT,
+    Water_Conservation_Structure_Total FLOAT,
+    Annual_Ground_Water_Recharge_Total FLOAT,
+    Environmental_Flows_Total FLOAT,
+    Annual_Extractable_Ground_Water_Resource_Total FLOAT,
+    Ground_Water_Extraction_Domestic_Total FLOAT,
+    Ground_Water_Extraction_Industrial_Total FLOAT,
+    Ground_Water_Extraction_Irrigation_Total FLOAT,
+    Ground_Water_Extraction_All_Uses_Total FLOAT,
+    Stage_of_Ground_Water_Extraction FLOAT,
+    Alloc_GW_Dom_Util_2025_ham FLOAT,
+    Net_Annual_GW_Avail_Future_Use_ham FLOAT,
+    Quality_Tagging_Major_Param_Present VARCHAR(255),
+    Quality_Tagging_Other_Params_Present VARCHAR(255),
+    Add_Pot_Resources_Spec_Cond_ham FLOAT,
+    Waterlogged_Shallow_Water_Table FLOAT,
+    Flood_Prone FLOAT,
+    Spring_Discharge FLOAT,
+    Coastal_Areas_Total FLOAT,
+    In_Storage_Unconf_GW_Res_ham_Total FLOAT,
+    Total_GW_Avail_Unconf_Aq_ham_Total FLOAT,
+    Total_GW_Avail_in_Area_ham_Total FLOAT,
+    Fresh FLOAT,
+    Saline FLOAT
+);
+
+-- Insert sample data into the simplified table (hypothetical values for Bathinda)
+
+
+INSERT INTO groundwater_simplified (
+    DISTRICT, ASSESSMENT_UNIT, Rainfall_mm, Total_Geographical_Area_ha, Recharge_Worthy_Area_ha, Hilly_Area_ha,
+    Rainfall_Recharge_Total, Canals_Total, Tanks_and_Ponds_Total, Water_Conservation_Structure_Total,
+    Annual_Ground_Water_Recharge_Total, Environmental_Flows_Total, Annual_Extractable_Ground_Water_Resource_Total,
+    Ground_Water_Extraction_Domestic_Total, Ground_Water_Extraction_Industrial_Total, Ground_Water_Extraction_Irrigation_Total,
+    Ground_Water_Extraction_All_Uses_Total, Stage_of_Ground_Water_Extraction, Alloc_GW_Dom_Util_2025_ham,
+    Net_Annual_GW_Avail_Future_Use_ham, Quality_Tagging_Major_Param_Present, Quality_Tagging_Other_Params_Present,
+    Add_Pot_Resources_Spec_Cond_ham, Waterlogged_Shallow_Water_Table, Flood_Prone, Spring_Discharge,
+    Coastal_Areas_Total, In_Storage_Unconf_GW_Res_ham_Total, Total_GW_Avail_Unconf_Aq_ham_Total,
+    Total_GW_Avail_in_Area_ham_Total, Fresh, Saline
+) VALUES (
+    'Bathinda', 'Bathinda Block', 400.0, 100000.0, 90000.0, 10000.0,
+    5000.0, 3000.0, 1000.0, 800.0,
+    12000.0, 1000.0, 11000.0,
+    800.0, 200.0, 9000.0,
+    10000.0, 145.0, 2000.0,
+    3000.0, 'Salinity', 'Heavy Metals',
+    1000.0, 500.0, 200.0, 100.0,
+    0.0, 4000.0, 5000.0,
+    20000.0, 10000.0, 500.0
+);
