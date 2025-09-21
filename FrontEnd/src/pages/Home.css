@@ -2,7 +2,7 @@
 .home-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 50%, #e0f7fa 100%);
-  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
 }
 
 /* Hero Section */
@@ -15,7 +15,7 @@
 }
 
 .hero-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -90,13 +90,6 @@
   align-items: center;
 }
 
-.water-drop-large {
-  font-size: 4rem;
-  animation: float 3s ease-in-out infinite;
-  z-index: 2;
-  position: relative;
-}
-
 .ripple {
   position: absolute;
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -113,8 +106,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes ripple {
@@ -402,40 +400,36 @@
     gap: 2rem;
     text-align: center;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.2rem;
   }
-  
+
   .hero-actions {
     justify-content: center;
   }
-  
+
   .water-animation {
     width: 150px;
     height: 150px;
   }
-  
-  .water-drop-large {
-    font-size: 3rem;
-  }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .ingres-features {
     grid-template-columns: 1fr;
   }
-  
+
   .cta-actions {
     flex-direction: column;
     align-items: center;
@@ -446,35 +440,35 @@
   .hero-section {
     padding: 2rem 1rem;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .hero-description {
     font-size: 0.9rem;
   }
-  
+
   .stats-container {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .stat-item {
     padding: 1.5rem 0.5rem;
   }
-  
+
   .stat-number {
     font-size: 2rem;
   }
-  
+
   .feature-card {
     padding: 1.5rem;
   }
-  
+
   .btn {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;

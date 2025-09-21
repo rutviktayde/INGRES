@@ -1,15 +1,15 @@
-import React from 'react';
-import './ChatInput.css';
+import React from "react";
+import "./ChatInput.css";
 
-const ChatInput = ({ 
-  input, 
-  setInput, 
-  onSendMessage, 
-  suggestions = [], 
-  onSuggestionClick 
+const ChatInput = ({
+  input,
+  setInput,
+  onSendMessage,
+  suggestions = [],
+  onSuggestionClick,
 }) => {
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onSendMessage();
     }
   };
@@ -26,17 +26,17 @@ const ChatInput = ({
             placeholder="Ask about groundwater levels, irrigation, conservation schemes..."
             className="message-input"
           />
-          <div className="input-icon">💬</div>
+          <div className="input-icon"></div>
         </div>
-        <button 
-          onClick={onSendMessage} 
+        <button
+          onClick={onSendMessage}
           disabled={!input.trim()}
-          className={`send-button ${input.trim() ? 'active' : 'disabled'}`}
+          className={`send-button ${input.trim() ? "active" : "disabled"}`}
         >
           <span className="send-icon">➤</span>
         </button>
       </div>
-      
+
       {suggestions.length > 0 && (
         <div className="suggestions-container">
           {suggestions.map((suggestion, index) => (

@@ -1,9 +1,9 @@
-import React from 'react';
-import './ChatMessage.css';
+import React from "react";
+import "./ChatMessage.css";
 
 const ChatMessage = ({ message, isTyping = false }) => {
   const formatTime = (date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   if (isTyping) {
@@ -11,7 +11,7 @@ const ChatMessage = ({ message, isTyping = false }) => {
       <div className="message-wrapper bot-message">
         <div className="message-group">
           <div className="message-avatar bot">
-            <span className="bot-icon">💧</span>
+            <span className="bot-icon"></span>
           </div>
           <div className="message-bubble bot typing-bubble">
             <div className="typing-indicator">
@@ -26,13 +26,17 @@ const ChatMessage = ({ message, isTyping = false }) => {
   }
 
   return (
-    <div className={`message-wrapper ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
+    <div
+      className={`message-wrapper ${
+        message.sender === "user" ? "user-message" : "bot-message"
+      }`}
+    >
       <div className="message-group">
         <div className={`message-avatar ${message.sender}`}>
-          {message.sender === 'user' ? (
+          {message.sender === "user" ? (
             <span className="user-initial">You</span>
           ) : (
-            <span className="bot-icon">💧</span>
+            <span className="bot-icon"></span>
           )}
         </div>
         <div className={`message-bubble ${message.sender}`}>
