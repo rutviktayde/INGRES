@@ -5,49 +5,41 @@ import "./Home.css";
 const Home = () => {
   const features = [
     {
-      icon: "💬",
       title: "Chat Share Functionality",
       description:
         "Share specific chatbot conversations or insights with colleagues and stakeholders for collaborative decision-making.",
     },
     {
-      icon: "🗣️",
       title: "Plain Language Queries",
       description:
         "Ask groundwater-related questions in natural language without technical expertise required.",
     },
     {
-      icon: "🔗",
       title: "Direct INGRES Integration",
       description:
         "Fetches authoritative data directly from the official groundwater database (India Ground Water Resource Estimation System).",
     },
     {
-      icon: "🌐",
       title: "Multilingual Support",
       description:
         "Supports English and Indian regional languages for wider accessibility across diverse user groups.",
     },
     {
-      icon: "📊",
       title: "Graph & Analysis Output",
       description:
         "Generates charts, maps, and visual insights directly within the chat interface.",
     },
     {
-      icon: "📥",
       title: "Export Charts & Visuals",
       description:
         "Download generated visuals for reporting and presentations.",
     },
     {
-      icon: "⚡",
       title: "Low Latency Responses",
       description:
         "Smart caching and optimized pipeline ensure instant query results.",
     },
     {
-      icon: "💾",
       title: "Browser Data Caching",
       description:
         "Reduces redundant requests and improves overall performance.",
@@ -62,7 +54,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="home-container">
+    <div className="home-container dark-theme">
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
@@ -89,9 +81,6 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className="hero-visual">
-            <div className="water-animation"></div>
-          </div>
         </div>
       </section>
 
@@ -117,7 +106,6 @@ const Home = () => {
           <div className="features-grid">
             {features.map((feature, index) => (
               <div key={index} className="feature-card">
-                <div className="feature-icon">{feature.icon}</div>
                 <h3 className="feature-title">{feature.title}</h3>
                 <p className="feature-description">{feature.description}</p>
               </div>
@@ -142,17 +130,17 @@ const Home = () => {
             </p>
             <div className="ingres-features">
               <div className="ingres-feature">
-                <span className="check-icon">✅</span>
+                <span className="check-icon"></span>
                 <span>
                   Real-time access to current and historical assessment results
                 </span>
               </div>
               <div className="ingres-feature">
-                <span className="check-icon">✅</span>
+                <span className="check-icon"></span>
                 <span>Interactive scientific diagrams and visualizations</span>
               </div>
               <div className="ingres-feature">
-                <span className="check-icon">✅</span>
+                <span className="check-icon"></span>
                 <span>
                   Seamless integration for quick information retrieval
                 </span>

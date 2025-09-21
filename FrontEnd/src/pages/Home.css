@@ -1,43 +1,34 @@
-/* Home Page Styles */
+/* Home Page Styles - Dark Theme */
 .home-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 50%, #e0f7fa 100%);
+  background: url("/background.png") no-repeat center center fixed;
+  background-size: cover;
   font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
-}
-
-/* Hero Section */
-.hero-section {
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #2196f3 0%, #00bcd4 100%);
-  color: white;
+  color: #eaeaea;
   position: relative;
-  overflow: hidden;
 }
 
-.hero-section::before {
+/* Overlay for readability */
+.home-container::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="water" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23water)"/></svg>');
-  opacity: 0.3;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 0;
 }
 
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+.home-container > * {
   position: relative;
   z-index: 1;
 }
 
-.hero-text {
-  animation: slideInLeft 0.8s ease-out;
+/* Hero Section */
+.hero-section {
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 .hero-title {
@@ -45,115 +36,37 @@
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.2;
+  color: #ffffff;
 }
 
 .highlight {
-  background: linear-gradient(45deg, #ffeb3b, #ffc107);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #4db5ff;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  opacity: 0.9;
   font-weight: 300;
+  color: #bbbbbb;
 }
 
 .hero-description {
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 2.5rem;
-  opacity: 0.9;
+  color: #aaaaaa;
 }
 
 .hero-actions {
   display: flex;
   gap: 1rem;
+  justify-content: center;
   flex-wrap: wrap;
-}
-
-.hero-visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: slideInRight 0.8s ease-out;
-}
-
-.water-animation {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ripple {
-  position: absolute;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  animation: ripple 2s infinite;
-}
-
-.ripple.delay-1 {
-  animation-delay: 0.5s;
-}
-
-.ripple.delay-2 {
-  animation-delay: 1s;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes ripple {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    width: 200px;
-    height: 200px;
-    opacity: 0;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 /* Stats Section */
 .stats-section {
   padding: 3rem 2rem;
-  background: white;
 }
 
 .stats-container {
@@ -167,9 +80,8 @@
 .stat-item {
   text-align: center;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: rgba(30, 30, 30, 0.85);
   border-radius: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
@@ -180,20 +92,19 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2196f3;
+  color: #4db5ff;
   margin-bottom: 0.5rem;
 }
 
 .stat-label {
   font-size: 1rem;
-  color: #666;
+  color: #cccccc;
   font-weight: 500;
 }
 
 /* Features Section */
 .features-section {
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .features-container {
@@ -206,13 +117,13 @@
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-  color: #333;
+  color: #ffffff;
 }
 
 .section-subtitle {
   font-size: 1.2rem;
   text-align: center;
-  color: #666;
+  color: #bbbbbb;
   margin-bottom: 3rem;
 }
 
@@ -223,42 +134,34 @@
 }
 
 .feature-card {
-  background: white;
+  background: rgba(25, 25, 25, 0.9);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(77, 181, 255, 0.3);
   transition: all 0.3s ease;
-  border: 1px solid #e3f2fd;
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  display: block;
+  border-color: #4db5ff;
 }
 
 .feature-title {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #333;
+  color: #ffffff;
 }
 
 .feature-description {
-  color: #666;
+  color: #cccccc;
   line-height: 1.6;
 }
 
 /* INGRES Section */
 .ingres-section {
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #1976d2 0%, #00acc1 100%);
-  color: white;
+  background: rgba(15, 15, 15, 0.85);
 }
 
 .ingres-container {
@@ -271,7 +174,7 @@
 }
 
 .ingres-content .section-title {
-  color: white;
+  color: #ffffff;
   margin-bottom: 1.5rem;
 }
 
@@ -279,7 +182,7 @@
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  color: #cccccc;
 }
 
 .ingres-features {
@@ -294,13 +197,15 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(77, 181, 255, 0.1);
   border-radius: 0.5rem;
-  backdrop-filter: blur(10px);
 }
 
 .check-icon {
-  font-size: 1.2rem;
+  width: 10px;
+  height: 10px;
+  background: #4db5ff;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 
@@ -311,7 +216,7 @@
 /* CTA Section */
 .cta-section {
   padding: 4rem 2rem;
-  background: white;
+  background: rgba(20, 20, 20, 0.9);
 }
 
 .cta-container {
@@ -324,12 +229,12 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #333;
+  color: #ffffff;
 }
 
 .cta-description {
   font-size: 1.2rem;
-  color: #666;
+  color: #bbbbbb;
   margin-bottom: 2.5rem;
   line-height: 1.6;
 }
@@ -345,7 +250,7 @@
 .btn {
   display: inline-block;
   padding: 0.875rem 2rem;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -355,37 +260,34 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #2196f3, #00bcd4);
-  color: white;
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+  background: #4db5ff;
+  color: #121212;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+  background: #3aa0e6;
 }
 
 .btn-secondary {
   background: transparent;
-  color: #2196f3;
-  border-color: #2196f3;
+  color: #4db5ff;
+  border-color: #4db5ff;
 }
 
 .btn-secondary:hover {
-  background: #2196f3;
-  color: white;
-  transform: translateY(-2px);
+  background: #4db5ff;
+  color: #121212;
 }
 
 .btn-outline {
   background: transparent;
-  color: white;
-  border-color: white;
+  color: #4db5ff;
+  border-color: #4db5ff;
 }
 
 .btn-outline:hover {
-  background: white;
-  color: #1976d2;
+  background: #4db5ff;
+  color: #121212;
 }
 
 .btn-large {
@@ -395,82 +297,18 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-  }
-
   .hero-title {
     font-size: 2.5rem;
   }
-
-  .hero-subtitle {
-    font-size: 1.2rem;
-  }
-
-  .hero-actions {
-    justify-content: center;
-  }
-
-  .water-animation {
-    width: 150px;
-    height: 150px;
-  }
-
   .section-title {
     font-size: 2rem;
   }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
+  .features-grid,
   .ingres-features {
     grid-template-columns: 1fr;
   }
-
   .cta-actions {
     flex-direction: column;
     align-items: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-section {
-    padding: 2rem 1rem;
-  }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  .hero-description {
-    font-size: 0.9rem;
-  }
-
-  .stats-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat-item {
-    padding: 1.5rem 0.5rem;
-  }
-
-  .stat-number {
-    font-size: 2rem;
-  }
-
-  .feature-card {
-    padding: 1.5rem;
-  }
-
-  .btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
   }
 }
