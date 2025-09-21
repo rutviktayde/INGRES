@@ -163,168 +163,155 @@ const Contact = () => {
 
   return (
     <div className="contact-container">
-      {/* Header Section */}
-      <section className="contact-header">
-        <div className="header-content">
-          <h1 className="page-title">Contact Us</h1>
-          <p className="page-subtitle">
-            Get in touch with our team for support, questions, or feedback about
-            Jal Sathi
-          </p>
-        </div>
-      </section>
-
-      <div className="contact-content">
-        {/* Contact Form Section */}
-        <section className="contact-form-section">
-          <div className="form-container">
-            <h2 className="section-title">Send us a Message</h2>
-            <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="name" className="form-label">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className={`form-input ${errors.name ? "error" : ""}`}
-                    placeholder="Enter your full name"
-                  />
-                  {errors.name && (
-                    <span className="error-message">{errors.name}</span>
-                  )}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email" className="form-label">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={`form-input ${errors.email ? "error" : ""}`}
-                    placeholder="Enter your email address"
-                  />
-                  {errors.email && (
-                    <span className="error-message">{errors.email}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="category" className="form-label">
-                    Category
-                  </label>
-                  <select
-                    id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="form-select"
-                  >
-                    {categories.map((category) => (
-                      <option key={category.value} value={category.value}>
-                        {category.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="subject" className="form-label">
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className={`form-input ${errors.subject ? "error" : ""}`}
-                    placeholder="Enter message subject"
-                  />
-                  {errors.subject && (
-                    <span className="error-message">{errors.subject}</span>
-                  )}
-                </div>
+      {/* Contact Form Section */}
+      <section className="contact-form-section">
+        <div className="form-container">
+          <h2 className="section-title">Send us a Message</h2>
+          <form onSubmit={handleSubmit} className="contact-form">
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={`form-input ${errors.name ? "error" : ""}`}
+                  placeholder="Enter your full name"
+                />
+                {errors.name && (
+                  <span className="error-message">{errors.name}</span>
+                )}
               </div>
 
               <div className="form-group">
-                <label htmlFor="message" className="form-label">
-                  Message *
+                <label htmlFor="email" className="form-label">
+                  Email Address *
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  className={`form-textarea ${errors.message ? "error" : ""}`}
-                  placeholder="Enter your message here..."
-                  rows="5"
+                  className={`form-input ${errors.email ? "error" : ""}`}
+                  placeholder="Enter your email address"
                 />
-                {errors.message && (
-                  <span className="error-message">{errors.message}</span>
+                {errors.email && (
+                  <span className="error-message">{errors.email}</span>
                 )}
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className={`submit-button ${isSubmitting ? "loading" : ""}`}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="spinner"></div>
-                    Sending Message...
-                  </>
-                ) : (
-                  "Send Message"
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="category" className="form-label">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  {categories.map((category) => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="subject" className="form-label">
+                  Subject *
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className={`form-input ${errors.subject ? "error" : ""}`}
+                  placeholder="Enter message subject"
+                />
+                {errors.subject && (
+                  <span className="error-message">{errors.subject}</span>
                 )}
-              </button>
-            </form>
-          </div>
-        </section>
-
-        {/* Contact Information Section */}
-        <section className="contact-info-section">
-          <div className="info-container">
-            <h2 className="section-title">Get in Touch</h2>
-            <div className="contact-cards">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="contact-card">
-                  <div className="contact-icon">{info.icon}</div>
-                  <h3 className="contact-title">{info.title}</h3>
-                  <p className="contact-details">{info.details}</p>
-                  <p className="contact-description">{info.description}</p>
-                </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="faq-section">
-          <div className="faq-container">
-            <h2 className="section-title">Frequently Asked Questions</h2>
-            <div className="faq-list">
-              {faqs.map((faq, index) => (
-                <div key={index} className="faq-item">
-                  <h3 className="faq-question">{faq.question}</h3>
-                  <p className="faq-answer">{faq.answer}</p>
-                </div>
-              ))}
+            <div className="form-group">
+              <label htmlFor="message" className="form-label">
+                Message *
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className={`form-textarea ${errors.message ? "error" : ""}`}
+                placeholder="Enter your message here..."
+                rows="5"
+              />
+              {errors.message && (
+                <span className="error-message">{errors.message}</span>
+              )}
             </div>
+
+            <button
+              type="submit"
+              className={`submit-button ${isSubmitting ? "loading" : ""}`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="spinner"></div>
+                  Sending Message...
+                </>
+              ) : (
+                "Send Message"
+              )}
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* Contact Information Section */}
+      <section className="contact-info-section">
+        <div className="info-container">
+          <h2 className="section-title">Get in Touch</h2>
+          <div className="contact-cards">
+            {contactInfo.map((info, index) => (
+              <div key={index} className="contact-card">
+                <div className="contact-icon">{info.icon}</div>
+                <h3 className="contact-title">{info.title}</h3>
+                <p className="contact-details">{info.details}</p>
+                <p className="contact-description">{info.description}</p>
+              </div>
+            ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="faq-section">
+        <div className="faq-container">
+          <h2 className="section-title">Frequently Asked Questions</h2>
+          <div className="faq-list">
+            {faqs.map((faq, index) => (
+              <div key={index} className="faq-item">
+                <h3 className="faq-question">{faq.question}</h3>
+                <p className="faq-answer">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

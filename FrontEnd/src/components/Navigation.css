@@ -41,8 +41,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-3px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 .logo-text {
@@ -85,7 +90,7 @@
 }
 
 .nav-link.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 50%;
@@ -283,23 +288,23 @@
   .nav-container {
     padding: 0 1rem;
   }
-  
+
   .desktop-menu {
     display: none;
   }
-  
+
   .nav-auth {
     display: none;
   }
-  
+
   .mobile-menu-button {
     display: flex;
   }
-  
+
   .nav-logo {
     font-size: 1.3rem;
   }
-  
+
   .logo-icon {
     font-size: 1.75rem;
   }
@@ -309,23 +314,23 @@
   .nav-container {
     padding: 0 0.75rem;
   }
-  
+
   .nav-logo {
     font-size: 1.2rem;
   }
-  
+
   .logo-icon {
     font-size: 1.5rem;
   }
-  
+
   .mobile-menu-content {
     padding: 1.5rem;
   }
-  
+
   .mobile-nav-link {
     padding: 0.875rem;
   }
-  
+
   .mobile-auth-link {
     padding: 0.625rem 1.25rem;
   }
