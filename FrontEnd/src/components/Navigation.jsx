@@ -7,10 +7,10 @@ const Navigation = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Home", icon: "🏠" },
-    { path: "/chat", label: "Chat", icon: "💬" },
-    { path: "/about", label: "About", icon: "ℹ️" },
-    { path: "/contact", label: "Contact", icon: "📞" },
+    { path: "/", label: "Home", icon: "" },
+    { path: "/chat", label: "Chat", icon: "" },
+    { path: "/about", label: "About", icon: "" },
+    { path: "/contact", label: "Contact", icon: "" },
   ];
 
   const isActive = (path) => {
