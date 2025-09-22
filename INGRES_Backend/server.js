@@ -1,25 +1,10 @@
 // server.js
 const express = require("express");
 const path = require("path");
-const mysql = require('mysql2'); 
 require("dotenv").config();
+
 const app = express();
-const routes = require("./Routes/routes");
 app.use(express.json());
-
-// connecting Mysql database
-const con = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-});
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-
 
 // Allow CORS during development only (adjust origin in production)
 if (process.env.NODE_ENV !== "production") {
@@ -58,45 +43,7 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.use("/", routes);
-
-
-//😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️ we have to move to routes.js
-// Chat API route for Jal Sathi
-// app.post("/api/chat", (req, res) => {
-//   try {
-//     const { message, timestamp } = req.body;
-    
-//     // Validate the request
-//     if (!message || typeof message !== 'string') {
-//       return res.status(400).json({ 
-//         error: "Message is required and must be a string" 
-//       });
-//     }
-
-//     // Log the received message
-//     console.log(`Received chat message: ${message}`);
-//     console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
-
-//     // Here you can add your AI/ML processing logic
-//     // For now, we'll return a simple acknowledgment
-//     const response = {
-//       success: true,
-//       message: "Message received successfully",
-//       receivedMessage: message,
-//       timestamp: new Date().toISOString(),
-//       // You can add AI response here later
-//       aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
-//     };
-
-//     res.json(response);
-//   } catch (error) {
-//     console.error("Error processing chat message:", error);
-//     res.status(500).json({ 
-//       error: "Internal server error while processing chat message" 
-//     });
-//   }
-// });
+app.post("user/api/req", (re) => {});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
