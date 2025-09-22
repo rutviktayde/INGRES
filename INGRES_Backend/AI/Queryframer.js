@@ -116,11 +116,10 @@ try {
 
 try {
   answers = await data_retrive(sql);
-  return answers;
 } catch (error) {
     console.error("Error retrieving data :", error);
 }
-
+  return answers;
 }
 
 module.exports = { main };

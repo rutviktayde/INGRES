@@ -37,15 +37,16 @@ router.post("/api/chat", async(req, res) => {
     // the actaul work is done here🤖🤖🤖'
     answers = await Queryframer.main(message)
 console.log('Back to routes.js');  
-  if (answers != null){
-    await response_gen.main(answers,message)
+  if (answers){
+    console.log('this is answer framer');
+    const chatfromai = await response_gen.main(answers,message)
     response = {
       success: true,
       message: "Message received successfully",
       receivedMessage: message,
       timestamp: new Date().toISOString(),
       // You can add AI response here later
-      aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
+      aiResponse: chatfromai
     };
   
   } 
