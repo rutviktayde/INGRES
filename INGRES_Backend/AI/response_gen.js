@@ -4,14 +4,14 @@
 
 const { GoogleGenAI } = require('@google/genai');
 
-let fullText = '';
 
 async function main(db_data,user_query) {
+    let fullText = '';
     console.log('query', user_query);
     console.log('data', db_data);
     const data = JSON.stringify(db_data);
     const prompt = `You are a friendly virtual assistant for the INGRES groundwater system, here to help with clear, helpful answers. For the user's question: '${user_query}', use the data from the database query: '${data}' to craft a concise response (under 150 words). Summarize key insights with simple explanations from the schema (e.g., extraction stage means how much groundwater is used vs. available). Sound natural and engaging, like chatting with an expert—start with a warm greeting if it fits. If trends or comparisons are involved, suggest a quick visualization (e.g., "A bar chart would show district differences nicely"). Make it user-friendly, multilingual if asked, and geared toward decision-making for planners, researchers, or the public. If no data matches, politely say "Sorry, no relevant data found—let's try refining your query!"`;
-    // console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiii',prompt);
+    console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiii',prompt);
     // process.exit(0)
 
     const ai = new GoogleGenAI({
