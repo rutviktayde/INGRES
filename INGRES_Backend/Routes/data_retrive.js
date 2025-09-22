@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+let answers = null;
 async function data_retrive(sql_query) {
     console.log("Inside data_retrive function");
     console.log("SQL Query received in data_retrive for retrieval from the databse :\n\n\n\n ",sql_query);
@@ -11,15 +12,18 @@ async function data_retrive(sql_query) {
     });
 
       try {
-        connection.connect(function(err) {
+       await connection.connect(function(err) {
               if (err) throw err;
             connection.query(sql_query, function (err, result, fields) {
                 if (err) throw err;
+                answers = result;
                 console.log(result);
                   });
           });
+          return answers;
       } catch (error) {
-        console.error("Error executing query in db: ", error);
+        // console.error("Error executing query in db: ", error);
+        console.log("Error executing query in db: ", error);
       }
 }
 

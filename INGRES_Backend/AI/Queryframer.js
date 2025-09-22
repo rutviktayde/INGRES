@@ -4,9 +4,10 @@
 const data_retrive = require('../Routes/data_retrive');
 const { GoogleGenAI } = require('@google/genai');
 //to resolve error
-let fullText = '';
 async function main(query) {
+    let fullText = '';
     user_query = query;
+    let answers = null;
     prompt =`Generate a SQL query or response for the user query: '${user_query}'. The table is 'ingres' in the 'ingres_db' database with the following schema:    DISTRICT VARCHAR(255),
     ASSESSMENT_UNIT VARCHAR(255),
     Rainfall_mm FLOAT,
@@ -43,7 +44,7 @@ async function main(query) {
     apiKey: process.env.GEMINI_API_KEY,
   });
   const config = {};
-  const model = 'gemini-2.5-pro';
+  const model = 'gemini-2.0-flash';
   const contents = [
     {
       role: 'user',
@@ -72,40 +73,50 @@ try {
 }
 
 
-// / Remove markdown code fences if present
+console.log("Full Response: ", fullText);
+console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+/// Remove markdown code fences if present
 if (fullText.startsWith("```")) {
-  // Remove the first line (```json) and the trailing fences
   const lines = fullText.split('\n');
-  // Remove first line and any last line that is just ```
-  if (lines[0].startsWith("```")) {
-    lines.shift();
-  }
-  if (lines[lines.length - 1].startsWith("```")) {
-    lines.pop();
-  }
+  if (lines[0].startsWith("```")) lines.shift();
+  if (lines[lines.length - 1].startsWith("```")) lines.pop();
   fullText = lines.join('\n');
 }
-// Parse the fullText as JSON
-let parsed;
+
+// If multiple JSON objects are present, keep only the first one
+const firstBrace = fullText.indexOf("{");
+const lastBrace = fullText.lastIndexOf("}");
+if (firstBrace !== -1 && lastBrace !== -1) {
+  fullText = fullText.slice(firstBrace, lastBrace + 1);
+}
+
+// Parse JSON
+let parsed = null;
 try {
   parsed = JSON.parse(fullText);
 } catch (error) {
-  console.error('Error parsing JSON:', error);
+  console.error("Error parsing JSON:", error, "\nRaw text:", fullText);
 }
 
-
-// 🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️🙂‍↔️this part is added to remove postgres specific ILIKE and DISTRICT to LOWER(DISTRICT) for case insensitive search
-const sql = parsed ? parsed.sql.replace(/ILIKE/gi, "LIKE").replace(/DISTRICT/g, "LOWER(DISTRICT)"): null;
-console.log("SQL Query: ", sql);
-const chart = parsed ? parsed.chart : null;
-console.log("chart type: ", chart);
-//extracting sql query from the response
-// const converting = JSON.parse(fullText);
-// const sql = converting.sql;
-// console.log("SQL Query: ", sql);
+// Clean SQL
+let sql = null;
+let chart = null;
+try {
+  if (parsed) {
+    sql = parsed.sql
+      .replace(/ILIKE/gi, "LIKE")
+      .replace(/DISTRICT/g, "LOWER(DISTRICT)");
+    chart = parsed.chart;
+  }
+  console.log("SQL Query:", sql);
+  console.log("chart type:", chart);
+} catch (error) {
+  console.error("Error in SQL cleaning:", error);
+}
 
 try {
-   await data_retrive(sql);
+  answers = await data_retrive(sql);
+  return answers;
 } catch (error) {
     console.error("Error retrieving data :", error);
 }

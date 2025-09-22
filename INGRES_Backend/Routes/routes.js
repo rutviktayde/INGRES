@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Queryframer = require("../AI/Queryframer");
 let { data_retrive } = require("../Routes/data_retrive");
+const response_gen = require('../AI/response_gen')
+let answers = null;
+let response;
 // Define your routes here
 // Example route
 router.post("/example", (req, res) => {
@@ -32,15 +35,31 @@ router.post("/api/chat", async(req, res) => {
     console.log(`Received chat message: ${message}`);
     console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
     // the actaul work is done here🤖🤖🤖'
-    await Queryframer.main(message)
-  .then(() => {
-    res.status(200).send("Query processed");
-  })
-  .catch((error) => {
-    console.error("Error processing query:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  });
+    answers = await Queryframer.main(message)
+console.log('Back to routes.js');  
+  if (answers != null){
+    await response_gen.main(answers,message)
+    response = {
+      success: true,
+      message: "Message received successfully",
+      receivedMessage: message,
+      timestamp: new Date().toISOString(),
+      // You can add AI response here later
+      aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
+    };
+  
+  } 
+  else{
+       response = {
+      success: true,
+      message: "Message received successfully",
+      receivedMessage: message,
+      timestamp: new Date().toISOString(),
+      // You can add AI response here later
+      aiResponse: `I received your message: "${message}". There was error generating response Shivam is goat`
+    };
 
+  }
     // Here you can add your AI/ML processing logic
     // For now, we'll return a simple acknowledgment
 
@@ -55,7 +74,7 @@ router.post("/api/chat", async(req, res) => {
     //   aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
     // };
 
-    // res.json(response);
+    res.json(response);
   } catch (error) {
     console.error("Error processing chat message:", error);
     res.status(500).json({ 
