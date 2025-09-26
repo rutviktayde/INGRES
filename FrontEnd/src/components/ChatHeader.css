@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 50%, #e0f7fa 100%);
-  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
 }
 
 /* Chat Main Container */
@@ -70,11 +70,11 @@
   .jal-sathi-container {
     height: 100vh;
   }
-  
+
   .chat-main {
     height: calc(100vh - 120px);
   }
-  
+
   .messages-container {
     max-height: calc(100vh - 200px);
   }
@@ -82,9 +82,9 @@
 
 /* Chat Header Styles */
 .chat-header {
-  background: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border-bottom: 4px solid #2196f3;
+  background: rgba(20, 20, 20, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border-bottom: 4px solid #4db5ff;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -127,8 +127,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-3px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 .status-indicator {
@@ -144,9 +149,15 @@
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .header-info {
@@ -157,7 +168,7 @@
 .bot-title {
   font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #1976d2, #00acc1);
+  background: linear-gradient(135deg, #4db5ff, #1976d2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -168,7 +179,7 @@
 }
 
 .bot-subtitle {
-  color: #666;
+  color: #bbbbbb;
   font-size: 0.875rem;
   display: flex;
   align-items: center;
@@ -188,7 +199,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: #666;
+  color: #bbbbbb;
   flex-shrink: 0;
 }
 
@@ -205,15 +216,15 @@
   .header-content {
     padding: 0.75rem 1rem;
   }
-  
+
   .bot-title {
     font-size: 1.25rem;
   }
-  
+
   .bot-subtitle {
     font-size: 0.75rem;
   }
-  
+
   .online-status {
     display: none;
   }
@@ -223,20 +234,20 @@
   .header-content {
     gap: 0.75rem;
   }
-  
+
   .bot-avatar {
     width: 40px;
     height: 40px;
   }
-  
+
   .water-drop {
     font-size: 1.25rem;
   }
-  
+
   .bot-title {
     font-size: 1.1rem;
   }
-  
+
   .bot-subtitle {
     font-size: 0.7rem;
   }
