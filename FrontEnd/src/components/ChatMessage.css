@@ -52,8 +52,11 @@
 }
 
 .message-avatar.bot {
+  width: 20px; /* Smaller size */
+  height: 20px; /* Smaller size */
   background: linear-gradient(135deg, #2196f3, #00bcd4);
   color: white;
+  font-size: 0.5rem; /* Adjusted font size for initials */
 }
 
 /* Initials for user and bot avatars */
