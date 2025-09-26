@@ -1,6 +1,6 @@
 /* Chat Input Styles */
 .input-area {
-  background: rgba(20, 20, 20, 0.95);
+  background: rgba(20, 20, 20, 0); /* Fully transparent */
   backdrop-filter: blur(10px);
   border-top: 1px solid #4db5ff33;
   padding: 1.5rem;
@@ -75,14 +75,9 @@
 }
 
 .send-button.active {
-  background: linear-gradient(135deg, #4db5ff, #1976d2);
-  color: #121212;
+  background: linear-gradient(135deg, #5b5d5e, #1976d2);
+  color: #ffffff;
   box-shadow: 0 4px 15px #4db5ff33;
-}
-
-.send-button.active:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
 
 .send-button.active:active {
