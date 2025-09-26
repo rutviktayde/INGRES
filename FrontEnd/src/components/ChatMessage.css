@@ -29,7 +29,10 @@
 .message-avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  background-image: url("/public/MessageAvatar.png"); /* Replace with your image */
+  background-size: cover; /* Ensures the image fills the circle */
+  background-position: center; /* Centers the image within the circle */
+  border-radius: 50%; /* Keeps the avatar circular */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +43,7 @@
 }
 
 .message-avatar:hover {
-  transform: scale(1.1);
+  transform: scale(1.05); /* Optional: Scale up on hover for a nice effect */
 }
 
 .message-avatar.user {
@@ -53,6 +56,7 @@
   color: white;
 }
 
+/* Initials for user and bot avatars */
 .user-initial {
   font-size: 0.6rem;
   font-weight: 700;
@@ -140,9 +144,11 @@
 .typing-dot:nth-child(1) {
   animation-delay: -0.32s;
 }
+
 .typing-dot:nth-child(2) {
   animation-delay: -0.16s;
 }
+
 .typing-dot:nth-child(3) {
   animation-delay: 0s;
 }
