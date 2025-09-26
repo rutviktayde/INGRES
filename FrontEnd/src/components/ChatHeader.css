@@ -14,8 +14,8 @@
   margin: 0 auto;
   padding: 0.5rem 1rem; /* Reduced padding */
   display: flex;
-  align-items: center;
-  gap: 0.5rem; /* Reduced gap between elements */
+  align-items: center; /* Align avatar and text vertically */
+  gap: 1rem; /* Horizontal gap between avatar and text */
 }
 
 .bot-avatar-container {
@@ -24,8 +24,8 @@
 }
 
 .bot-avatar {
-  width: 32px; /* Smaller size */
-  height: 32px; /* Smaller size */
+  width: 40px; /* Slightly larger than before */
+  height: 40px; /* Slightly larger than before */
   background-image: url("/public/ChatBot.jpg"); /* Image as background */
   background-size: cover;
   background-position: center;
@@ -114,22 +114,7 @@
   flex-shrink: 0;
 }
 
-.online-status {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem; /* Reduced gap */
-  font-size: 0.75rem;
-  color: #bbbbbb;
-  flex-shrink: 0;
-}
-
-.status-dot {
-  width: 6px; /* Smaller status dot */
-  height: 6px; /* Smaller status dot */
-  background: #4caf50;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
+/* Removed online-status and status-dot */
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -143,10 +128,6 @@
 
   .bot-subtitle {
     font-size: 0.7rem; /* Smaller subtitle */
-  }
-
-  .online-status {
-    display: none;
   }
 }
 
