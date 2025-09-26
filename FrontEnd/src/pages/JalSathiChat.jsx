@@ -1,28 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ChatHeader from '../components/ChatHeader';
-import ChatMessage from '../components/ChatMessage';
-import ChatInput from '../components/ChatInput';
-import ChatFooter from '../components/ChatFooter';
+import React, { useState, useRef, useEffect } from "react";
+import ChatHeader from "../components/ChatHeader";
+import ChatMessage from "../components/ChatMessage";
+import ChatInput from "../components/ChatInput";
+import ChatFooter from "../components/ChatFooter";
 
 const JalSathiChat = () => {
   const [messages, setMessages] = useState([
-    { 
-      text: "नमस्ते! I'm Jal Sathi, your intelligent groundwater management assistant. I can help you with water level monitoring, irrigation planning, conservation strategies, and government schemes. How can I assist you today?", 
-      sender: 'bot', 
-      timestamp: new Date() 
-    }
+    {
+      text: "नमस्ते! I'm Jal Sathi, your intelligent groundwater management assistant. I can help you with water level monitoring, irrigation planning, conservation strategies, and government schemes. How can I assist you today?",
+      sender: "bot",
+      timestamp: new Date(),
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
   const suggestions = [
-    'Water Level Status',
-    'Irrigation Schedule', 
-    'Conservation Tips',
-    'Government Schemes',
-    'Rainwater Harvesting',
-    'Soil Moisture Analysis'
+    "Water Level Status",
+    "Irrigation Schedule",
+    "Conservation Tips",
+    "Government Schemes",
+    "Rainwater Harvesting",
+    "Soil Moisture Analysis",
   ];
 
   const scrollToBottom = () => {
@@ -35,23 +35,27 @@ const JalSathiChat = () => {
 
   const handleSendMessage = async () => {
     if (input.trim()) {
-      const userMessage = { text: input, sender: 'user', timestamp: new Date() };
-      setMessages(prev => [...prev, userMessage]);
+      const userMessage = {
+        text: input,
+        sender: "user",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, userMessage]);
       const messageText = input;
-      setInput('');
+      setInput("");
       setIsTyping(true);
-      
+
       try {
         // Send message to backend
-        const response = await fetch('http://localhost:5000/api/chat', {
-          method: 'POST',
+        const response = await fetch("http://localhost:5000/api/chat", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             message: messageText,
-            timestamp: new Date().toISOString()
-          })
+            timestamp: new Date().toISOString(),
+          }),
         });
 
         if (!response.ok) {
@@ -59,31 +63,40 @@ const JalSathiChat = () => {
         }
 
         const data = await response.json();
-        console.log('Backend response:', data);
-        
+        console.log("Backend response:", data);
+
         // Add bot response from backend
-        setMessages(prev => [...prev, { 
-          text: data.aiResponse || 'I received your message but couldn\'t generate a response.', 
-          sender: 'bot', 
-          timestamp: new Date() 
-        }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            text:
+              data.aiResponse ||
+              "I received your message but couldn't generate a response.",
+            sender: "bot",
+            timestamp: new Date(),
+          },
+        ]);
       } catch (error) {
-        console.error('Error sending message to backend:', error);
-        
+        console.error("Error sending message to backend:", error);
+
         // Fallback to simulated response if backend fails
         const responses = [
           `Based on your query about "${messageText}", I can provide detailed information about groundwater management strategies, including monitoring techniques, sustainable irrigation practices, and water conservation methods.`,
           `Regarding "${messageText}", let me share some insights from the Jal Shakti Abhiyan data. I can help you understand water table levels, seasonal variations, and recommended conservation practices for your area.`,
-          `Great question about "${messageText}"! As part of the Jal Shakti initiative, I can guide you through water budgeting, rainwater harvesting techniques, and efficient irrigation scheduling to optimize groundwater usage.`
+          `Great question about "${messageText}"! As part of the Jal Shakti initiative, I can guide you through water budgeting, rainwater harvesting techniques, and efficient irrigation scheduling to optimize groundwater usage.`,
         ];
-        
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        
-        setMessages(prev => [...prev, { 
-          text: `⚠️ Backend connection failed. ${randomResponse}`, 
-          sender: 'bot', 
-          timestamp: new Date() 
-        }]);
+
+        const randomResponse =
+          responses[Math.floor(Math.random() * responses.length)];
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: `⚠️ Backend connection failed. ${randomResponse}`,
+            sender: "bot",
+            timestamp: new Date(),
+          },
+        ]);
       } finally {
         setIsTyping(false);
       }
@@ -95,40 +108,46 @@ const JalSathiChat = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      background: 'linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 50%, #e0f7fa 100%)',
-      fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif"
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        background: 'url("/background.png") no-repeat center center fixed',
+        fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+      }}
+    >
       <ChatHeader />
-      
-      <div style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        width: '100%',
-        minHeight: 0
-      }}>
-        <div style={{
+
+      <div
+        style={{
           flex: 1,
-          overflowY: 'auto',
-          padding: '1.5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem',
-          minHeight: 0
-        }}>
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          width: "100%",
+          minHeight: 0,
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "1.5rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.5rem",
+            minHeight: 0,
+          }}
+        >
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
           {isTyping && <ChatMessage isTyping={true} />}
           <div ref={messagesEndRef} />
         </div>
-        
+
         <ChatInput
           input={input}
           setInput={setInput}
@@ -137,7 +156,7 @@ const JalSathiChat = () => {
           onSuggestionClick={handleSuggestionClick}
         />
       </div>
-      
+
       <ChatFooter />
     </div>
   );
