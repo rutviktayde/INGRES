@@ -113,7 +113,8 @@ const JalSathiChat = () => {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        background: 'url("/background.png") no-repeat center center fixed',
+        background:
+          'url("/background.png") ,rgba(0, 0, 0, 0.5), no-repeat center center fixed',
         fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
       }}
     >
