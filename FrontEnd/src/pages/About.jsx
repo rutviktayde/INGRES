@@ -5,14 +5,10 @@ function About() {
   return (
     <div className="app">
       <header className="app-header">
-        <div className="header-content">
-          <div className="bot-avatar">
-            <div className="avatar-icon">💧</div>
-          </div>
-          <div className="header-text">
-            <h1>About Jal Sathi</h1>
-            <p>Your Groundwater Management Assistant</p>
-          </div>
+        <div className="header-content"></div>
+        <div className="header-text">
+          <h1>About Jal Sathi</h1>
+          <p>Your Groundwater Management Assistant</p>
         </div>
       </header>
 
