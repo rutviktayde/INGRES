@@ -20,7 +20,7 @@ const ChatHeader = () => {
         </div>
         <div className="online-status">
           <div className="status-dot"></div>
-          <span>Online</span>
+          <span></span>
         </div>
       </div>
     </header>

@@ -34,7 +34,7 @@ const ChatMessage = ({ message, isTyping = false }) => {
       <div className="message-group">
         <div className={`message-avatar ${message.sender}`}>
           {message.sender === "user" ? (
-            <span className="user-initial">You</span>
+            <span className="user-initial">👤</span>
           ) : (
             <span className="bot-icon"></span>
           )}
