@@ -18,7 +18,6 @@ The Central Ground Water Board (CGWB), in coordination with various agencies, an
 **Proposed Solution:**  
 The INGRES ChatBOT addresses this challenge by offering a natural-language interface for querying groundwater data, accessing both current and historical assessments, and visualizing results interactively. Its integration with the INGRES database ensures instant, reliable information delivery, fostering greater engagement and informed decision-making.
 
----
 
 ## Key Features
 
@@ -152,6 +151,9 @@ Please see [LICENSE](LICENSE) for usage details.
 
 For queries or support, please open an [issue](https://github.com/rutviktayde/INGRES/issues).
 
----
 
+---
 _Empower groundwater management with AI-driven insights. Join us in making India's water future sustainable!_
+
+---
+<img width="456" height="140" alt="Image" src="https://github.com/user-attachments/assets/e40dfd39-6201-49cb-9958-59917a492efe" />
