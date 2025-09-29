@@ -41,27 +41,9 @@ The INGRES ChatBOT addresses this challenge by offering a natural-language inter
 
 ## Solution Workflow
 
-```mermaid
-flowchart TD
-    User(User)
-    ChatBOT(ChatBOT UI)
-    NLP(Natural Language Processing)
-    QueryGen(Query Generator)
-    DB[INGRES Database]
-    Viz(Visualization Engine)
-    Response(Response in User Language)
 
-    User --> ChatBOT
-    ChatBOT --> NLP
-    NLP --> QueryGen
-    QueryGen --> DB
-    DB --> QueryGen
-    QueryGen --> Viz
-    Viz --> Response
-    QueryGen --> Response
-    Response --> ChatBOT
-    ChatBOT --> User
-```
+<img width="1217" height="542" alt="Image" src="https://github.com/user-attachments/assets/08abc3e0-a71f-431c-8d92-01f0b74b41cd" />
+
 
 1. **User Interaction:**  
    Users interact with the ChatBOT via a web or embedded interface, asking questions in their preferred language.
