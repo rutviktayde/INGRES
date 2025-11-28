@@ -8,38 +8,65 @@ async function main(query) {
     let fullText = '';
     user_query = query;
     let answers = null;
-    prompt =`Generate a SQL query or response for the user query: '${user_query}'. The table is 'ingres' in the 'ingres_db' database with the following schema:    DISTRICT VARCHAR(255),
-    ASSESSMENT_UNIT VARCHAR(255),
-    Rainfall_mm FLOAT,
-    Total_Geographical_Area_ha FLOAT,
-    Recharge_Worthy_Area_ha FLOAT,
-    Hilly_Area_ha FLOAT,
-    Rainfall_Recharge_Total FLOAT,
-    Canals_Total FLOAT,
-    Tanks_and_Ponds_Total FLOAT,
-    Water_Conservation_Structure_Total FLOAT,
-    Annual_Ground_Water_Recharge_Total FLOAT,
-    Environmental_Flows_Total FLOAT,
-    Annual_Extractable_Ground_Water_Resource_Total FLOAT,
-    Ground_Water_Extraction_Domestic_Total FLOAT,
-    Ground_Water_Extraction_Industrial_Total FLOAT,
-    Ground_Water_Extraction_Irrigation_Total FLOAT,
-    Ground_Water_Extraction_All_Uses_Total FLOAT,
-    Stage_of_Ground_Water_Extraction FLOAT,
-    Alloc_GW_Dom_Util_2025_ham FLOAT,
-    Net_Annual_GW_Avail_Future_Use_ham FLOAT,
-    Quality_Tagging_Major_Param_Present VARCHAR(255),
-    Quality_Tagging_Other_Params_Present VARCHAR(255),
-    Add_Pot_Resources_Spec_Cond_ham FLOAT,
-    Waterlogged_Shallow_Water_Table FLOAT,
-    Flood_Prone FLOAT,
-    Spring_Discharge FLOAT,
-    Coastal_Areas_Total FLOAT,
-    In_Storage_Unconf_GW_Res_ham_Total FLOAT,
-    Total_GW_Avail_Unconf_Aq_ham_Total FLOAT,
-    Total_GW_Avail_in_Area_ham_Total FLOAT,
-    Fresh FLOAT,
-    Saline FLOAT. Ensure the query is optimized, handles null values, and aligns with the dataset columns. If the query requests a visualization, suggest an appropriate chart type (e.g., bar, line, pie) and describe its structure. Return only the SQL query and chart type in a structured format: { "sql": "the query", "chart": "which one or null" }. If the query cannot be answered with the given schema, respond with "Query cannot be answered with the given schema."`; ;
+    prompt =`You are a SQL and Data Visualization expert. Generate a JSON response for the user query: '${user_query}'.
+
+The table is 'ingres' in the 'ingres_db' database with the following schema:
+- DISTRICT VARCHAR(255)
+- ASSESSMENT_UNIT VARCHAR(255)
+- Rainfall_mm FLOAT
+- Total_Geographical_Area_ha FLOAT
+- Recharge_Worthy_Area_ha FLOAT
+- Hilly_Area_ha FLOAT
+- Rainfall_Recharge_Total FLOAT
+- Canals_Total FLOAT
+- Tanks_and_Ponds_Total FLOAT
+- Water_Conservation_Structure_Total FLOAT
+- Annual_Ground_Water_Recharge_Total FLOAT
+- Environmental_Flows_Total FLOAT
+- Annual_Extractable_Ground_Water_Resource_Total FLOAT
+- Ground_Water_Extraction_Domestic_Total FLOAT
+- Ground_Water_Extraction_Industrial_Total FLOAT
+- Ground_Water_Extraction_Irrigation_Total FLOAT
+- Ground_Water_Extraction_All_Uses_Total FLOAT
+- Stage_of_Ground_Water_Extraction FLOAT
+- Alloc_GW_Dom_Util_2025_ham FLOAT
+- Net_Annual_GW_Avail_Future_Use_ham FLOAT
+- Quality_Tagging_Major_Param_Present VARCHAR(255)
+- Quality_Tagging_Other_Params_Present VARCHAR(255)
+- Add_Pot_Resources_Spec_Cond_ham FLOAT
+- Waterlogged_Shallow_Water_Table FLOAT
+- Flood_Prone FLOAT
+- Spring_Discharge FLOAT
+- Coastal_Areas_Total FLOAT
+- In_Storage_Unconf_GW_Res_ham_Total FLOAT
+- Total_GW_Avail_Unconf_Aq_ham_Total FLOAT
+- Total_GW_Avail_in_Area_ham_Total FLOAT
+- Fresh FLOAT
+- Saline FLOAT
+
+Instructions:
+1. Generate an optimized SQL query handling null values (use COALESCE where necessary).
+2. Select the most appropriate chart type from: "bar", "pie", "map", "line".
+3. Create a descriptive title.
+4. Generate 'data': Since you cannot execute the query, generate 3-5 rows of REALISTIC MOCK DATA that matches the columns in your generated SQL. Use standard JSON format [{"label": "CategoryName", "value": 123.45}].
+5. Define 'axis_labels' for the x and y axes.
+
+Output Format (Strict JSON only, no markdown text):
+{
+  "sql": "SELECT ...",
+  "chart_type": "bar",
+  "title": "Descriptive Title Here",
+  "data": [
+    {"label": "Mock Category 1", "value": 10.5},
+    {"label": "Mock Category 2", "value": 20.1}
+  ],
+  "axis_labels": {
+    "x": "Label for X Axis",
+    "y": "Label for Y Axis"
+  }
+}
+
+If the query cannot be answered with the given schema, respond with: { "error": "Query cannot be answered with the given schema." }`; ;
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
   });

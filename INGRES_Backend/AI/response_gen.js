@@ -23,7 +23,7 @@ async function main(db_data,user_query) {
 
     const config = {}; // Add generation config if needed, e.g., { temperature: 0.7 }
 
-    const model = 'gemini-2.5-flash'; // Updated to a likely current model name as of 2025; check docs for latest
+    const model = 'gemini-2.5-pro'; // Updated to a likely current model name as of 2025; check docs for latest
 
     const contents = [
         {
