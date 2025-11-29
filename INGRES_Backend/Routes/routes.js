@@ -20,69 +20,54 @@ Queryframer.main(query)
 });
 
 
-router.post("/api/chat", async(req, res) => {
+router.post("/api/chat", async (req, res) => {
   try {
-    const { message, timestamp } = req.body;
-    
-    // Validate the request
-    if (!message || typeof message !== 'string') {
-      return res.status(400).json({ 
-        error: "Message is required and must be a string" 
+    let { message, timestamp } = req.body;
+
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({
+        error: "Message is required and must be a string",
       });
     }
 
-    // Log the received message
     console.log(`Received chat message: ${message}`);
     console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
-    // the actaul work is done here🤖🤖🤖'
-    answers = await Queryframer.main(message)
-console.log('Back to routes.js');  
-  if (answers){
-    console.log('this is answer framer');
-    const chatfromai = await response_gen.main(answers,message)
-    response = {
-      success: true,
-      message: "Message received successfully",
-      receivedMessage: message,
-      timestamp: new Date().toISOString(),
-      // You can add AI response here later
-      aiResponse: chatfromai
-    };
-  
-  } 
-  else{
-       response = {
-      success: true,
-      message: "Message received successfully",
-      receivedMessage: message,
-      timestamp: new Date().toISOString(),
-      // You can add AI response here later
-      aiResponse: `I received your message: "${message}". There was error generating response Shivam is goat`
-    };
 
-  }
-    // Here you can add your AI/ML processing logic
-    // For now, we'll return a simple acknowledgment
+    const answers = await Queryframer.main(message);
+    let response;
 
-// for now we will have to comment this part
+    if (answers) {
+      console.log("Generated answer from Queryframer");
 
-    // const response = {
-    //   success: true,
-    //   message: "Message received successfully",
-    //   receivedMessage: message,
-    //   timestamp: new Date().toISOString(),
-    //   // You can add AI response here later
-    //   aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
-    // };
+      const lowerMessage = message.toLowerCase();
+      const chatfromai = await response_gen.main(answers, lowerMessage);
+
+      response = {
+        success: true,
+        message: "Message received successfully",
+        receivedMessage: lowerMessage,
+        timestamp: new Date().toISOString(),
+        aiResponse: chatfromai,
+      };
+    } else {
+      response = {
+        success: true,
+        message: "Message received successfully",
+        receivedMessage: message,
+        timestamp: new Date().toISOString(),
+        aiResponse: `I received your message: "${message}". There was an error generating response. Shivam is goat.`,
+      };
+    }
 
     res.json(response);
   } catch (error) {
     console.error("Error processing chat message:", error);
-    res.status(500).json({ 
-      error: "Internal server error while processing chat message" 
+    res.status(500).json({
+      error: "Internal server error while processing chat message",
     });
   }
 });
+
 
 
 module.exports = router;
