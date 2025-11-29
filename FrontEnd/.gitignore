@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local env and Python venvs
+.env
+myvenv/
+venv/
+env/
+.venv/
