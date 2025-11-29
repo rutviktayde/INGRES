@@ -1,164 +1,248 @@
 import React, { useState, useRef, useEffect } from "react";
-import ChatHeader from "../components/ChatHeader";
-import ChatMessage from "../components/ChatMessage";
-import ChatInput from "../components/ChatInput";
-import ChatFooter from "../components/ChatFooter";
+import "../App.css";
 
 const JalSathiChat = () => {
-  const [messages, setMessages] = useState([
-    {
-      text: "नमस्ते! I'm Jal Sathi, your intelligent groundwater management assistant. I can help you with water level monitoring, irrigation planning, conservation strategies, and government schemes. How can I assist you today?",
-      sender: "bot",
-      timestamp: new Date(),
-    },
-  ]);
+  const greetingText = `नमस्ते! I'm Jal Sathi, your intelligent groundwater management assistant. 
+I can help you with water level monitoring, irrigation planning, conservation strategies, and government schemes. 
+How can I assist you today?`;
+
+  // ─────────────────────────────────────────────
+  // GREETING TYPING ANIMATION
+  // ─────────────────────────────────────────────
+  const [displayedGreeting, setDisplayedGreeting] = useState("");
+  const [typingDone, setTypingDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    const speed = 25;
+
+    const interval = setInterval(() => {
+      setDisplayedGreeting(greetingText.slice(0, i));
+      i++;
+      if (i > greetingText.length) {
+        clearInterval(interval);
+        setTypingDone(true);
+      }
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // ─────────────────────────────────────────────
+  // CHAT STATE
+  // ─────────────────────────────────────────────
+  // ✅ START EMPTY → greeting is only in hero, not as a chat bubble
+  const [messages, setMessages] = useState([]);
+
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [darkMode, setDarkMode] = useState(true);
 
-  const suggestions = [
-    "Water Level Status",
-    "Irrigation Schedule",
-    "Conservation Tips",
-    "Government Schemes",
-    "Rainwater Harvesting",
-    "Soil Moisture Analysis",
-  ];
+  const messagesEndRef = useRef(null);
+  const initialRenderRef = useRef(true);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // ✅ Do NOT auto-scroll on very first render → fixes “page slides down”
   useEffect(() => {
+    if (initialRenderRef.current) {
+      initialRenderRef.current = false;
+      return;
+    }
+    if (messages.length === 0) return;
     scrollToBottom();
   }, [messages]);
 
+  const hasUserMessages = messages.some((m) => m.sender === "user");
+
   const handleSendMessage = async () => {
-    if (input.trim()) {
-      const userMessage = {
-        text: input,
-        sender: "user",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, userMessage]);
-      const messageText = input;
-      setInput("");
-      setIsTyping(true);
+    if (!input.trim()) return;
 
-      try {
-        // Send message to backend
-        const response = await fetch("http://localhost:5000/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: messageText,
-            timestamp: new Date().toISOString(),
-          }),
-        });
+    const userMessage = {
+      text: input,
+      sender: "user",
+      timestamp: new Date(),
+    };
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    const messageText = input;
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsTyping(true);
 
-        const data = await response.json();
-        console.log("Backend response:", data);
+    try {
+      const response = await fetch("http://localhost:5000/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: messageText,
+          timestamp: new Date().toISOString(),
+        }),
+      });
 
-        // Add bot response from backend
-        setMessages((prev) => [
-          ...prev,
-          {
-            text:
-              data.aiResponse ||
-              "I received your message but couldn't generate a response.",
-            sender: "bot",
-            timestamp: new Date(),
-          },
-        ]);
-      } catch (error) {
-        console.error("Error sending message to backend:", error);
+      if (!response.ok) throw new Error();
 
-        // Fallback to simulated response if backend fails
-        const responses = [
-          `Based on your query about "${messageText}", I can provide detailed information about groundwater management strategies, including monitoring techniques, sustainable irrigation practices, and water conservation methods.`,
-          `Regarding "${messageText}", let me share some insights from the Jal Shakti Abhiyan data. I can help you understand water table levels, seasonal variations, and recommended conservation practices for your area.`,
-          `Great question about "${messageText}"! As part of the Jal Shakti initiative, I can guide you through water budgeting, rainwater harvesting techniques, and efficient irrigation scheduling to optimize groundwater usage.`,
-        ];
+      const data = await response.json();
 
-        const randomResponse =
-          responses[Math.floor(Math.random() * responses.length)];
+      setMessages((prev) => [
+        ...prev,
+        {
+          text:
+            data.aiResponse ||
+            "I received your message but couldn't generate a response.",
+          sender: "bot",
+          timestamp: new Date(),
+        },
+      ]);
+    } catch (error) {
+      const fallback = [
+        `Based on your query about "${messageText}", I can provide insights on groundwater strategies.`,
+        `Regarding "${messageText}", here’s something from the Jal Shakti data.`,
+        `Great question about "${messageText}"! Let me share groundwater optimization tips.`,
+      ];
+      const random =
+        fallback[Math.floor(Math.random() * fallback.length)];
 
-        setMessages((prev) => [
-          ...prev,
-          {
-            text: `⚠️ Backend connection failed. ${randomResponse}`,
-            sender: "bot",
-            timestamp: new Date(),
-          },
-        ]);
-      } finally {
-        setIsTyping(false);
-      }
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: `⚠️ Backend connection failed. ${random}`,
+          sender: "bot",
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
     }
   };
 
-  const handleSuggestionClick = (suggestion) => {
-    setInput(suggestion);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        background:
-          'url("/background.png") ,rgba(0, 0, 0, 0.5), no-repeat center center fixed',
-        fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
-      }}
-    >
-      <ChatHeader />
+    <div className={`gw-app ${darkMode ? "dark" : "light"}`}>
+      {/* Floating Controls */}
+      <div className="gw-floating gw-floating-left">
+        <img src="/INGRES_LOGO.png" alt="INGRES" className="gw-floating-logo" />
+      </div>
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          maxWidth: "1200px",
-          margin: "0 auto",
-          width: "100%",
-          minHeight: 0,
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-            minHeight: 0,
-          }}
-        >
-          {messages.map((message, index) => (
-            <ChatMessage key={index} message={message} />
+      <div className="gw-floating gw-floating-right">
+        <button className="gw-icon-toggle" onClick={toggleTheme}>
+          {darkMode ? "◐" : "◑"}
+        </button>
+        <button className="gw-auth-btn gw-auth-secondary">Sign in</button>
+        <button className="gw-auth-btn gw-auth-primary">Sign up</button>
+      </div>
+
+      {/* Hero Section */}
+      <section className={`gw-hero ${hasUserMessages ? "gw-hero-hidden" : ""}`}>
+        <div className="gw-hero-inner">
+          <img src="/INGRES_LOGO.png" alt="INGRES" className="gw-hero-logo" />
+          <h1 className="gw-hero-title">Ground Water Data Search</h1>
+
+          {/* TYPED GREETING (ABOVE SEARCH BAR) */}
+          {!hasUserMessages && (
+            <div className={`gw-typed-greeting ${typingDone ? "show" : ""}`}>
+              {displayedGreeting}
+            </div>
+          )}
+
+          {/* Search Bar */}
+          {!hasUserMessages && (
+            <>
+              <div className="gw-hero-searchbar">
+                <input
+                  className="gw-search-input"
+                  type="text"
+                  placeholder="What do you want to know?"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                <button className="gw-send-btn" onClick={handleSendMessage}>
+                  ↑
+                </button>
+              </div>
+
+              <div className="gw-analytics-row">
+                <button className="gw-analytics-pill">Analytics-1</button>
+                <button className="gw-analytics-pill">Analytics-2</button>
+                <button className="gw-analytics-pill">Analytics-3</button>
+              </div>
+
+              <p className="gw-hero-footer">
+                By using Ground Water Data Search, you agree to our{" "}
+                <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+              </p>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* Chat Messages */}
+      <main className="gw-chat-shell">
+        <div className="gw-messages">
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`gw-message-row ${
+                msg.sender === "user"
+                  ? "gw-message-row-user"
+                  : "gw-message-row-bot"
+              }`}
+            >
+              <div
+                className={`gw-message-bubble ${
+                  msg.sender === "user" ? "gw-message-user" : "gw-message-bot"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
           ))}
-          {isTyping && <ChatMessage isTyping={true} />}
+
+          {isTyping && (
+            <div className="gw-message-row gw-message-row-bot">
+              <div className="gw-message-bubble gw-message-bot gw-typing">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
-        <ChatInput
-          input={input}
-          setInput={setInput}
-          onSendMessage={handleSendMessage}
-          suggestions={suggestions}
-          onSuggestionClick={handleSuggestionClick}
-        />
-      </div>
-
-      <ChatFooter />
+        {/* Bottom Input */}
+        {hasUserMessages && (
+          <div className="gw-bottom-input">
+            <textarea
+              className="gw-bottom-textarea"
+              placeholder="Ask anything about groundwater, irrigation, conservation..."
+              rows={1}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <button
+              className="gw-send-btn gw-bottom-send"
+              onClick={handleSendMessage}
+            >
+              ↑
+            </button>
+          </div>
+        )}
+      </main>
     </div>
   );
 };

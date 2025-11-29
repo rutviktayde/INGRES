@@ -1,41 +1,22 @@
-import Navigation from "./components/Navigation";
-import Home from "./pages/Home";
-import JalSathiChat from "./pages/JalSathiChat";
-import About from "./pages/About";
-import Login from "./pages/Login";
-import Contact from "./pages/Contact";
-// We no longer route directly to the voice input UI.
-// It will be used as an overlay inside the new voice chat page.
-// import ChatBotUI from "./pages/Chat1on1";
-import JalSathiVoiceChat from "./pages/JalSathiVoiceChat"; // NEW IMPORT
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import JalSathiChat from "./pages/JalSathiChat";
 
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* Your original text-based chat */}
-          <Route path="/chat" element={<JalSathiChat />} />
+      <Routes>
+        {/* Chat page is the main home */}
+        <Route path="/" element={<JalSathiChat />} />
+        <Route path="/chat" element={<JalSathiChat />} />
 
-          {/* NEW ROUTE: The primary voice-enabled chat experience */}
-          <Route path="/voice-chat" element={<JalSathiVoiceChat />} />
+        {/* Later we’ll add /login and /signup */}
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/signup" element={<Signup />} /> */}
 
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/contact" element={<Contact />} />
-
-          {/* NOTE: The Chat1on1 component (which you import as ChatBotUI) 
-            is now an overlay used internally by JalSathiVoiceChat, 
-            so it should not be a standalone route.
-            If you remove this line, remember to keep Chat1on1.jsx in /pages.
-            <Route path="/chat1on1" element={<ChatBotUI />} />
-          */}
-        </Routes>
-      </div>
+        {/* Any unknown URL → go to chat */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </Router>
   );
 }
