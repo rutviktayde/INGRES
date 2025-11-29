@@ -9,6 +9,12 @@ pnpm-debug.log*
 dist/
 build/
 .env
+
+# Python virtual environments
+myvenv/
+venv/
+env/
+.venv/
 # Logs
 *.log
 logs
