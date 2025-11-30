@@ -1,13 +1,32 @@
 // server.js
 const express = require("express");
 const path = require("path");
-const mysql = require('mysql2'); 
+const mysql = require("mysql2");
 require("dotenv").config();
 const app = express();
 const routes = require("./Routes/routes");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+// -------------------------------------------------
+// MIDDLEWARE
+// -------------------------------------------------
 app.use(express.json());
 
-// connecting Mysql database
+// -------------------------------------------------
+// CORS FIX (Must be BEFORE all routes)
+// -------------------------------------------------
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// -------------------------------------------------
+// MYSQL (DON’T TOUCH — YOUR FRIEND’S WORK)
+// -------------------------------------------------
 const con = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -15,90 +34,40 @@ const con = mysql.createConnection({
   password: process.env.DB_PASSWORD,
 });
 
-con.connect(function(err) {
+con.connect(function (err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("MySQL Connected!");
 });
 
+// -------------------------------------------------
+// MONGO CONNECTION (ONLY ONCE)
+// -------------------------------------------------
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected (FORINGRES)"))
+  .catch((err) => console.log("MongoDB Error:", err));
 
-// Allow CORS during development only (adjust origin in production)
-if (process.env.NODE_ENV !== "production") {
-  const cors = require("cors");
-  app.use(cors({ origin: "http://localhost:5173" })); // Vite default
-}
-/* ---------- API routes ---------- */
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from INGRES backend" });
-});
 
-// Add more API routes under /api here
-// app.use('/api/users', require('./routes/users'));
+// -------------------------------------------------
+// AUTH ROUTES (ONLY ONCE)
+// -------------------------------------------------
+app.use("/auth", require("./Routes/auth_routes"));
 
-/* ---------- Serve frontend build in production ---------- */
-const viteDist = path.join(__dirname, "..", "FrontEnd", "dist"); // Vite -> dist
-const craBuild = path.join(__dirname, "..", "FrontEnd", "build"); // CRA -> build
+// -------------------------------------------------
+// AI + DATA RETRIEVAL ROUTES
+// -------------------------------------------------
+app.use("/", routes);
 
-const staticFolder = require("fs").existsSync(viteDist)
-  ? viteDist
-  : require("fs").existsSync(craBuild)
-  ? craBuild
-  : null;
-
-if (staticFolder) {
-  app.use(express.static(staticFolder));
-  // For client-side routing — return index.html for all non-API GETs
-  app.get("*", (req, res) => {
-    if (req.path.startsWith("/api"))
-      return res.status(404).json({ error: "Unknown API route" });
-    res.sendFile(path.join(staticFolder, "index.html"));
-  });
-}
-
+// -------------------------------------------------
+// TEST ROUTE
+// -------------------------------------------------
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.use("/", routes);
-
-
-//😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️ we have to move to routes.js
-// Chat API route for Jal Sathi
-// app.post("/api/chat", (req, res) => {
-//   try {
-//     const { message, timestamp } = req.body;
-    
-//     // Validate the request
-//     if (!message || typeof message !== 'string') {
-//       return res.status(400).json({ 
-//         error: "Message is required and must be a string" 
-//       });
-//     }
-
-//     // Log the received message
-//     console.log(`Received chat message: ${message}`);
-//     console.log(`Timestamp: ${timestamp || new Date().toISOString()}`);
-
-//     // Here you can add your AI/ML processing logic
-//     // For now, we'll return a simple acknowledgment
-//     const response = {
-//       success: true,
-//       message: "Message received successfully",
-//       receivedMessage: message,
-//       timestamp: new Date().toISOString(),
-//       // You can add AI response here later
-//       aiResponse: `I received your message: "${message}". This is where the AI response would be generated.`
-//     };
-
-//     res.json(response);
-//   } catch (error) {
-//     console.error("Error processing chat message:", error);
-//     res.status(500).json({ 
-//       error: "Internal server error while processing chat message" 
-//     });
-//   }
-// });
-
+// -------------------------------------------------
+// START SERVER
+// -------------------------------------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-  console.log(`Server running on port http://localhost:${PORT}/`)
+  console.log(`Server running on port http://localhost:${PORT}`)
 );

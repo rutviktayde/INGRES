@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../App.css";
+import "../App.css";
+import { useNavigate } from "react-router-dom";   
+
 
 const JalSathiChat = () => {
   const greetingText = `नमस्ते! I'm Jal Sathi, your intelligent groundwater management assistant. 
@@ -11,6 +14,9 @@ How can I assist you today?`;
   // ─────────────────────────────────────────────
   const [displayedGreeting, setDisplayedGreeting] = useState("");
   const [typingDone, setTypingDone] = useState(false);
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
   useEffect(() => {
     let i = 0;
@@ -59,6 +65,12 @@ How can I assist you today?`;
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
+
+    // 🔐 Block chat if user is not logged in
+    if (!isAuthenticated) {
+    navigate("/signin");
+    return;
+    }
 
     const userMessage = {
       text: input,
@@ -139,8 +151,12 @@ How can I assist you today?`;
         <button className="gw-icon-toggle" onClick={toggleTheme}>
           {darkMode ? "◐" : "◑"}
         </button>
-        <button className="gw-auth-btn gw-auth-secondary">Sign in</button>
-        <button className="gw-auth-btn gw-auth-primary">Sign up</button>
+         <button className="gw-auth-btn gw-auth-secondary" onClick={() => navigate("/signin")}>
+            Sign in
+          </button>
+          <button className="gw-auth-btn gw-auth-primary" onClick={() => navigate("/signin")}>
+            Sign up
+          </button>
       </div>
 
       {/* Hero Section */}
@@ -246,5 +262,8 @@ How can I assist you today?`;
     </div>
   );
 };
+
+
+
 
 export default JalSathiChat;

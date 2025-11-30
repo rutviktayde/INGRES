@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import JalSathiChat from "./pages/JalSathiChat";
+import Signin from "./pages/Signin";   
 
 function App() {
   return (
@@ -10,9 +11,8 @@ function App() {
         <Route path="/" element={<JalSathiChat />} />
         <Route path="/chat" element={<JalSathiChat />} />
 
-        {/* Later we’ll add /login and /signup */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/signup" element={<Signup />} /> */}
++       {/* Signin page */}
++       <Route path="/signin" element={<Signin />} />
 
         {/* Any unknown URL → go to chat */}
         <Route path="*" element={<Navigate to="/" replace />} />
