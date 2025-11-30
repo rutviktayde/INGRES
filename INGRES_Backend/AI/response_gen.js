@@ -1,59 +1,148 @@
-// To run this code you need to install the following dependencies:
 // npm install @google/genai
-// npm install -D @types/node
 
 const { GoogleGenAI } = require('@google/genai');
 
+// --- CONFIGURATION ---
+const MODEL_NAME = 'gemini-2.5-pro'; // Or 'gemini-2.0-flash' for speed
+const API_KEY = process.env.GEMINI_API_KEY;
 
-async function main(db_data,user_query) {
-    let fullText = '';
-    console.log('query', user_query);
-    console.log('data', db_data);
-    const data = JSON.stringify(db_data);
-    // const prompt = `You are a friendly virtual assistant for the INGRES groundwater system, here to help with clear, helpful answers. For the user's question: '${user_query}', use the data from the database query: '${data}' to craft a concise response (under 150 words). Summarize key insights with simple explanations from the schema (e.g., extraction stage means how much groundwater is used vs. available). Sound natural and engaging, like chatting with an expert—start with a warm greeting if it fits. If trends or comparisons are involved, suggest a quick visualization (e.g., "A bar chart would show district differences nicely"). Make it user-friendly, multilingual if asked, and geared toward decision-making for planners, researchers, or the public. If no data matches, politely say "Sorry, no relevant data found—let's try refining your query!"`;
-    // This is final prompt
-    const prompt = `You are a friendly virtual assistant for the INGRES groundwater system, here to help with clear, helpful answers. For the user's question: '${user_query}', use the data from the database query: '${data}' to craft a concise response (under 150 words). Start with a warm, conversational greeting like "Hi there!" or "Sure thing!", and sound natural—like chatting with a knowledgeable friend. Summarize key insights simply, explaining terms from the schema (e.g., "Extraction stage shows how much groundwater is used vs. what's available"). Use engaging language, ask follow-up questions if it fits, and keep it user-friendly—multilingual if requested. Use \n for line breaks to improve readability, and ** for bold text** to highlight key points. Gear toward decision-making for planners, researchers, or the public. If no data matches, politely say "Sorry, no relevant data found—let's try refining your query!"`;
-    // const prompt=` "Hello there! As your friendly virtual assistant for the INGRES groundwater system, I'm here to help with clear, helpful answers. To answer your question: '${user_query}', I'll use the data from the database query: '${data}' to give you a concise and easy-to-understand response. I'll summarize key insights with simple explanations using the information provided, like explaining what an 'extraction stage' means. I'll make it sound natural and engaging, like chatting with an expert. If we're looking at trends or comparing things, I might suggest a quick visualization, like a bar chart showing differences between districts. My goal is to be user-friendly and multilingual if requested, always geared towards helping with decision-making, whether you are a planner, researcher, or the general public. If no data matches your query, I'll politely say 'Sorry, no relevant data found – let's try refining your query!'"`;
-    console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiii',prompt);
-    // process.exit(0)
-
-    const ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
-    });
-
-    const config = {}; // Add generation config if needed, e.g., { temperature: 0.7 }
-
-    const model = 'gemini-2.5-pro'; // Updated to a likely current model name as of 2025; check docs for latest
-
-    const contents = [
-        {
-            role: 'user',
-            parts: [
-                {
-                    text: prompt,
-                },
-            ],
-        },
-    ];
-
-    try {
-        const response = await ai.models.generateContentStream({
-            model,
-            config,
-            contents,
-        });
-
-        for await (const chunk of response) {
-            if (chunk.text) {
-                fullText += chunk.text;
-            }
+/**
+ * Helper function to initialize the Gemini Client.
+ * Implements a Singleton pattern to avoid re-initializing on every call.
+ */
+let googleAIClient = null;
+function getClient() {
+    if (!googleAIClient) {
+        if (!API_KEY) {
+            throw new Error("CRITICAL: GEMINI_API_KEY is missing in environment variables.");
         }
-    } catch (error) {
-        console.error('Error during content generation using api:', error);
+        googleAIClient = new GoogleGenAI({ apiKey: API_KEY });
     }
-
-    console.log('full answer to query :', fullText);
-    return fullText; // Return the plain string instead of JSON.stringify
+    return googleAIClient;
 }
 
-module.exports = { main };
+/**
+ * Private helper to handle the actual API communication and streaming.
+ * @param {string} prompt - The constructed prompt.
+ * @returns {Promise<string>} - The generated text.
+ */
+async function _callGeminiAPI(prompt) {
+    try {
+        const ai = getClient();
+        const config = { temperature: 0.7 };
+
+        const result = await ai.models.generateContent({
+            model: MODEL_NAME,
+            generationConfig: config,
+            contents: [
+                {
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }
+            ]
+        });
+
+        // Extract text safely
+        let text = null;
+
+        if (typeof result?.response?.text === "function") {
+            text = result.response.text();
+        } else if (Array.isArray(result?.candidates)) {
+            text = result.candidates
+                .flatMap(c => c.content?.parts || [])
+                .map(p => p.text || "")
+                .join("");
+        }
+
+        if (!text || text.trim() === "") {
+            console.warn("⚠️ Gemini returned no readable text. Full result:", JSON.stringify(result, null, 2));
+            throw new Error("Gemini returned a response but no usable text.");
+        }
+
+        return text.trim();
+
+    } catch (error) {
+        console.error("❌ Error inside Gemini API call:", error.message);
+        return "I'm having trouble connecting right now. Please try again shortly.";
+    }
+}
+
+
+
+/**
+ * 1. SIMPLE RESPONSE GENERATOR (Data-Driven)
+ * Focuses on explaining SQL results, trends, and numbers.
+ * * @param {string} userQuery - The original question.
+ * @param {object|array} dbData - The raw JSON data from the SQL query.
+ */
+async function generateSimpleResponse(dbData,userQuery) {
+    console.log(`[SimpleResponse] Processing query this  is the question from the user: "${userQuery}"`);
+
+    if (!dbData || (Array.isArray(dbData) && dbData.length === 0)) {
+        return "Sorry, I couldn't find any relevant data in the database matching your specific criteria. Let's try refining your query (e.g., specifying a different district or year).";
+    }
+
+    const dataString = JSON.stringify(dbData);
+    console.log("Data String for Prompt:", dataString);
+    const prompt = `
+    You are an expert Groundwater Data Analyst for INGRES (Ministry of Jal Shakti).
+    
+    ### TASK:
+    Answer this user question: "${userQuery}" based **ONLY** on the database rows provided below.
+    
+    ### DATA RETRIEVED:
+    ${dataString}
+    
+    ### INSTRUCTIONS:
+    1. **Tone:** Warm, professional, and confident. Start with a brief greeting (e.g., "Here is the data for...").
+    2. **Insight:** Don't just list numbers. Explain what they mean. (e.g., If 'Stage_of_Extraction' > 100%, mention it is 'Over-Exploited').
+    3. **Schema Terms:** Briefly explain technical terms if used (e.g., "Recharge means water entering the aquifer").
+    4. **Visualization:** If you see a comparison (multiple districts or years), explicitly add this sentence at the end: "A chart has been generated to visualize these figures."
+    5. **Format:** Use **bolding** for district names and key values. Use bullet points for lists. Keep it under 150 words.
+    
+    Answer:
+    `;
+    
+    return await _callGeminiAPI(prompt);
+}
+
+/**
+ * 2. CUSTOM INSIGHTS GENERATOR (RAG-Driven)
+ * Focuses on synthesizing unstructured text, policies, and complex reasoning.
+ * * @param {string} userQuery - The original question.
+ * @param {string} ragOutput - The text chunks retrieved from the Vector DB/Knowledge Base.
+ */
+async function generateCustomInsights(userQuery, ragOutput) {
+    console.log(`[CustomInsights] Processing query: "${userQuery}"`);
+
+    if (!ragOutput || ragOutput.length < 10) {
+        return "I couldn't find specific documents or policies regarding that topic in my knowledge base. However, I can help you with general groundwater data.";
+    }
+
+    const prompt = `
+    You are a Policy & Research Assistant for INGRES.
+    
+    ### TASK:
+    Provide a detailed insight for: "${userQuery}" using the retrieved context documents.
+    
+    ### RETRIEVED CONTEXT (RAG):
+    ${ragOutput}
+    
+    ### INSTRUCTIONS:
+    1. **Synthesis:** Combine the retrieved chunks into a coherent answer. Do not say "The document says". Say "According to INGRES guidelines..." or "Ministry policies state...".
+    2. **Attribution:** If specific stakeholders (e.g., 'Central Ground Water Board') are mentioned in the text, highlight them.
+    3. **Actionable:** Focus on decision-making. What should a planner or researcher take away from this?
+    4. **Limitations:** If the context doesn't fully answer the specific nuance, admit it politely.
+    5. **Format:** Use clear paragraphs. **Bold** important policy names or Acts.
+    
+    Insight:
+    `;
+
+    return await _callGeminiAPI(prompt);
+}
+
+// Export functions for use in your main server
+module.exports = { 
+    generateSimpleResponse, 
+    generateCustomInsights 
+};

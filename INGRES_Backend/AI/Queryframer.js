@@ -10,7 +10,7 @@ async function main(query) {
     let answers = null;
     prompt =`You are a SQL and Data Visualization expert. Generate a JSON response for the user query: '${user_query}'.
 
-The table is 'grdWater' in the 'ingres' database with the following schema:
+The table is 'grdwater' in the 'ingres' database with the following schema:
 - State (VARCHAR)
 - District  (VARCHAR)
 - Assessment Unit  Name (VARCHAR)

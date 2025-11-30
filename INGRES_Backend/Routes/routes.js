@@ -40,7 +40,7 @@ router.post("/api/chat", async (req, res) => {
       console.log("Generated answer from Queryframer");
 
       const lowerMessage = message.toLowerCase();
-      const chatfromai = await response_gen.main(answers, lowerMessage);
+      const chatfromai = await response_gen.generateSimpleResponse(answers, lowerMessage);
 
       response = {
         success: true,
