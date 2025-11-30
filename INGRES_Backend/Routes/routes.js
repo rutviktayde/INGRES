@@ -9,7 +9,7 @@ let response;
 router.post("/example", (req, res) => {
   console.log("This is /example controller 🫡🫡:")
   const query=req.body.query;
-Queryframer.main(query)
+  Queryframer.main(query)
   .then(() => {
     res.status(200).json({ message: "Query processed" });
   })
