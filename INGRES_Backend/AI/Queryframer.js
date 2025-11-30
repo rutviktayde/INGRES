@@ -166,10 +166,7 @@ If the query cannot be answered, respond with: { "error": "Query cannot be answe
   }
   
   // Return the full package
-  return {
-      ...parsed,
-      real_data: answers // Append real data to the response
-  };
+  return answers;
 }
 
 module.exports = { main };
