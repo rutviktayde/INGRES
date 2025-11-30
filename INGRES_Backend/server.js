@@ -42,7 +42,9 @@ con.connect(function (err) {
 // -------------------------------------------------
 // MONGO CONNECTION (ONLY ONCE)
 // -------------------------------------------------
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: "FORINGRES",
+})
   .then(() => console.log("MongoDB Connected (FORINGRES)"))
   .catch((err) => console.log("MongoDB Error:", err));
 
