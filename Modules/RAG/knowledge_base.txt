@@ -45,6 +45,83 @@ Stage = (Annual Ground Water Extraction / Annual Extractable Ground Water Resour
 
 All assessment units (blocks, mandals, taluks) are categorized by the Central Ground Water Board based on the Stage of Ground Water Extraction:
 
+[cite_start]This response extracts and consolidates the core data from both the "National Compilation on Dynamic Ground Water Resources of India, 2024" [cite: 5207] [cite_start]and the 2025 [cite: 6433] reports into a single, structured knowledge base.
+
+Since a downloadable file format (like CSV or Excel) cannot be provided directly in this chat, the data is presented in organized Markdown tables and key points, which can be easily copied and pasted into any document or spreadsheet.
+
+***
+
+## CONSOLIDATED KNOWLEDGE BASE: DYNAMIC GROUND WATER RESOURCES OF INDIA (2024 & 2025)
+
+[cite_start]The data below is sourced from the two reports published by the **Central Ground Water Board (CGWB)**[cite: 5206, 6432]. [cite_start]The assessments use the **Ground Water Estimation Committee-2015 (GEC-2015)** methodology [cite: 5288, 6507] [cite_start]via the **India Groundwater Resource Estimation System (IN-GRES)**[cite: 5252, 6508].
+
+### I. Key National Indicators (At a Glance)
+
+| Indicator | 2024 Assessment | 2025 Assessment |
+| :--- | :--- | :--- |
+| **Total Annual Ground Water Recharge** | [cite_start]446.90 bcm [cite: 5283] | [cite_start]448.52 bcm [cite: 6502] |
+| **Annual Extractable Ground Water Resources** | [cite_start]406.19 bcm [cite: 5283] | [cite_start]407.75 bcm [cite: 6502] |
+| **Annual Ground Water Extraction** | [cite_start]245.64 bcm [cite: 5283] | [cite_start]247.22 bcm [cite: 6502] |
+| **Stage of Ground Water Extraction** | [cite_start]60.47% [cite: 5283] | [cite_start]60.63% [cite: 6502] |
+| **Primary Recharge Source** | [cite_start]Rainfall contributes ~61% [cite: 5140] | [cite_start]Rainfall contributes ~60% [cite: 7251] |
+
+### II. Historical Trends (2004–2025)
+
+| Assessment Year | Annual Ground Water Recharge (bcm) | Annual Extractable Ground Water Resource (bcm) | Annual Ground Water Extraction (bcm) | Stage of Extraction (%) |
+| :--- | :--- | :--- | :--- | :--- |
+| 2004 | [cite_start]433 [cite: 5304, 6546] | [cite_start]399 [cite: 5304, 6546] | [cite_start]231 [cite: 5304, 6546] | [cite_start]58% [cite: 5304, 6546] |
+| 2013 | [cite_start]447 [cite: 5304, 6546] | [cite_start]411 [cite: 5304, 6546] | [cite_start]253 [cite: 5304, 6546] | [cite_start]62% [cite: 5304, 6546] |
+| 2017 | [cite_start]432 [cite: 5304, 6546] | [cite_start]393 [cite: 5304, 6546] | [cite_start]249 [cite: 5304, 6546] | [cite_start]63% [cite: 5304, 6546] |
+| 2022 | [cite_start]438 [cite: 5304, 6546] | [cite_start]398 [cite: 5304, 6546] | [cite_start]239 [cite: 5304, 6546] | [cite_start]60% [cite: 5304, 6546] |
+| 2024 | [cite_start]446.90 [cite: 5304, 6546] | [cite_start]406.19 [cite: 5304, 6546] | [cite_start]245.64 [cite: 5304, 6546] | [cite_start]60.47% [cite: 5304, 6546] |
+| 2025 | [cite_start]448.52 [cite: 6546] | [cite_start]407.75 [cite: 6546] | [cite_start]247.22 [cite: 6546] | [cite_start]60.63% [cite: 6546] |
+
+### III. Categorization of Assessment Units (Blocks/Mandals/Talukas)
+
+[cite_start]The total number of assessed units increased from 6,746 in 2024 to 6,762 in 2025[cite: 5305, 6548].
+
+| Category | 2024 Units (No.) | 2024 Units (%) | 2025 Units (No.) | 2025 Units (%) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Safe** | [cite_start]4951 [cite: 5305] | [cite_start]73.39% [cite: 5305] | [cite_start]4946 [cite: 6548] | [cite_start]73.14% [cite: 6548] |
+| **Semi-Critical** | [cite_start]711 [cite: 5305] | [cite_start]10.54% [cite: 5305] | [cite_start]758 [cite: 6548] | [cite_start]11.21% [cite: 6548] |
+| **Critical** | [cite_start]206 [cite: 5305] | [cite_start]3.05% [cite: 5305] | [cite_start]201 [cite: 6548] | [cite_start]2.97% [cite: 6548] |
+| **Over-Exploited** | [cite_start]751 [cite: 5305] | [cite_start]11.13% [cite: 5305] | [cite_start]730 [cite: 6548] | [cite_start]10.80% [cite: 6548] |
+| **Saline** | [cite_start]127 [cite: 5305] | [cite_start]1.88% [cite: 5305] | [cite_start]127 [cite: 6548] | [cite_start]1.88% [cite: 6548] |
+
+**Distribution by Extractable Resource (2025):**
+* [cite_start]**Safe** units account for 73.60% (300.09 bcm) of the Total Annual Extractable Resources[cite: 6503].
+* [cite_start]**Over-Exploited** units account for 10.95% (44.66 bcm)[cite: 6503].
+* [cite_start]**Critical** units account for 3.14% (12.79 bcm)[cite: 6503].
+
+### IV. State-Wise Groundwater Scenario Example (Andhra Pradesh, 2025)
+
+| Andhra Pradesh Indicators (2025) | Value |
+| :--- | :--- |
+| Total Annual Groundwater Recharge | [cite_start]26.34 bcm [cite: 7383] |
+| Annual Extractable Groundwater Resource | [cite_start]25.02 bcm [cite: 7383] |
+| Annual Groundwater Extraction | [cite_start]7.88 bcm [cite: 7383] |
+| Stage of Groundwater Extraction | [cite_start]31.51% [cite: 7383] |
+| **Categorization (Units)** | |
+| Safe Units (No./%) | [cite_start]601 / 88.5% [cite: 7384] |
+| Semi-Critical Units (No./%) | [cite_start]24 / 3.5% [cite: 7384] |
+| Critical Units (No./%) | [cite_start]3 / 0.4% [cite: 7384] |
+| Over-exploited Units (No./%) | [cite_start]12 / 1.8% [cite: 7384] |
+
+### V. Groundwater Extraction Breakdown by Sector
+
+[cite_start]For both 2024 and 2025, the breakdown remains consistent[cite: 5742, 7266, 7267]:
+
+* **Agriculture (Irrigation):** ~87%
+* **Domestic Use:** ~11%
+* **Industrial Use:** ~2%
+
+### VI. Key Methodology and Context
+
+* [cite_start]**Assessment Unit:** The primary assessment units are Blocks, Mandals, or Talukas across States/UTs[cite: 5288, 6507].
+* [cite_start]**Over-Exploited Areas:** These areas are mostly concentrated in the north-western part of the country (Punjab, Haryana, Delhi, Western Uttar Pradesh), the arid western part (Rajasthan, Gujarat), and the southern peninsular region (Karnataka, Tamil Nadu, Telangana, Andhra Pradesh)[cite: 5140, 6515].
+* [cite_start]**Groundwater Quality:** There are 127 assessment units categorized as **'Saline'** where the phreatic aquifer is brackish or saline[cite: 5305, 6548]. [cite_start]An additional Annexure lists quality problems related to **Arsenic, Fluoride, and Salinity** in specific units for each State/UT[cite: 5335, 6418, 6419].
+
+
 ### Category 1: SAFE AREAS
 
 **Definition:** Stage of Ground Water Extraction ≤ 70%
