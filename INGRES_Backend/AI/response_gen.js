@@ -12,9 +12,23 @@ async function main(db_data,user_query) {
     const data = JSON.stringify(db_data);
     // const prompt = `You are a friendly virtual assistant for the INGRES groundwater system, here to help with clear, helpful answers. For the user's question: '${user_query}', use the data from the database query: '${data}' to craft a concise response (under 150 words). Summarize key insights with simple explanations from the schema (e.g., extraction stage means how much groundwater is used vs. available). Sound natural and engaging, like chatting with an expert—start with a warm greeting if it fits. If trends or comparisons are involved, suggest a quick visualization (e.g., "A bar chart would show district differences nicely"). Make it user-friendly, multilingual if asked, and geared toward decision-making for planners, researchers, or the public. If no data matches, politely say "Sorry, no relevant data found—let's try refining your query!"`;
     // This is final prompt
-    const prompt = `You are a friendly virtual assistant for the INGRES groundwater system, here to help with clear, helpful answers. For the user's question: '${user_query}', use the data from the database query: '${data}' to craft a concise response (under 150 words). Start with a warm, conversational greeting like "Hi there!" or "Sure thing!", and sound natural—like chatting with a knowledgeable friend. Summarize key insights simply, explaining terms from the schema (e.g., "Extraction stage shows how much groundwater is used vs. what's available"). Use engaging language, ask follow-up questions if it fits, and keep it user-friendly—multilingual if requested. Use \n for line breaks to improve readability, and ** for bold text** to highlight key points. Gear toward decision-making for planners, researchers, or the public. If no data matches, politely say "Sorry, no relevant data found—let's try refining your query!"`;
-    // const prompt=` "Hello there! As your friendly virtual assistant for the INGRES groundwater system, I'm here to help with clear, helpful answers. To answer your question: '${user_query}', I'll use the data from the database query: '${data}' to give you a concise and easy-to-understand response. I'll summarize key insights with simple explanations using the information provided, like explaining what an 'extraction stage' means. I'll make it sound natural and engaging, like chatting with an expert. If we're looking at trends or comparing things, I might suggest a quick visualization, like a bar chart showing differences between districts. My goal is to be user-friendly and multilingual if requested, always geared towards helping with decision-making, whether you are a planner, researcher, or the general public. If no data matches your query, I'll politely say 'Sorry, no relevant data found – let's try refining your query!'"`;
-    console.log('suiiiiiiiiiiiiiiiiiiiiiiiiiiii',prompt);
+
+
+
+
+    const prompt = `You are a friendly virtual assistant for the INGRES groundwater system,
+    here to help with clear, 
+    helpful answers. For the user's question: '${user_query}', use the data from the database 
+    query: '${data}' to craft a concise response (under 150 words). Start with a warm, conversational 
+    greeting like "Hi there!" or "Sure thing!", and sound natural—like chatting with a knowledgeable friend.
+    Summarize key insights simply, explaining terms from the schema (e.g., "Extraction stage shows how much 
+    groundwater is used vs. what's available"). Use engaging language, ask follow-up questions if it fits, 
+    and keep it user-friendly—multilingual if requested. 
+    Use \n for line breaks to improve readability, and ** for bold text** to highlight key points. 
+    Gear toward decision-making for planners, researchers, or the public. If no data matches, 
+    politely say "Sorry, no relevant data found—let's try refining your query!"`;
+
+    console.log('See here',user_query, data);
     // process.exit(0)
 
     const ai = new GoogleGenAI({
