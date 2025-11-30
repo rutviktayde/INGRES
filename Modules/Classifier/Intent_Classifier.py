@@ -9,6 +9,7 @@ from typing import Tuple
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
+import json
 
 # Download NLTK data (run once)
 nltk.download("punkt")
@@ -389,13 +390,43 @@ if __name__ == "__main__":
     "groundwater groundwater groundwater",
     "hahahaha lol lol lol lol",
     "Groundwater level of Elon Musk",
+    "Ground water level of Bathinda district?",
 
     ]
 
     print("\n--- Testing TF-IDF-Hybrid Model (Fallback) ---")
-    for q in test_queries_final:
-        intent, conf = classifier.predict(q)
-        action = "PASSED to LLM" if intent == "data_query" else "BLOCKED/LOCAL"
+    # --- Modified Code for JSON Output ---
 
-        print(f"\nQuery: '{q}'")
-        print(f"  -> Intent: {intent.upper()} (Confidence: {conf:.2f}) - Action: {action}")
+# List to hold the JSON objects for all queries
+rag_input_data = []
+
+for q in test_queries_final:
+    intent, conf = classifier.predict(q)
+    action = "PASSED to LLM" if intent == "data_query" else "BLOCKED/LOCAL"
+    
+    print(f"\nProcessing Query: '{q}' -> Action: {action}")
+    
+    # 🛑 KEY CHANGE: Check if the query should be passed
+    if action == "PASSED to LLM":
+        
+        # 1. Create a Python Dictionary for the current (PASSED) query
+        query_result = {
+            "query": q,
+            "intent": intent,
+            "confidence": round(conf, 4),
+            "action": action
+        }
+        
+        # 2. Append the dictionary to the main list
+        rag_input_data.append(query_result)
+        
+        print("   -> Status: **ADDED** to RAG pipeline.")
+    else:
+        print("   -> Status: **SKIPPED** (Blocked/Local).")
+
+
+# 3. Convert the list of dictionaries into a single JSON string
+json_output = json.dumps(rag_input_data, indent=4)
+print("\n--- JSON Output for RAG Pipeline ---")
+print(json_output)
+
